@@ -1,10 +1,10 @@
-- As of September 6, 2025, BOIL is trading at a price of $29.90, down from a previous close of $30.90. The stock has fluctuated within a day range of $29.78 to $31.33. [Investing.com](https://www.investing.com/etfs/proshares-ultra-dj-ubs-natural-gas)
-- The Aroon Indicator for BOIL has entered a downward trend as of September 5, 2025, suggesting a potential strong downward movement. Traders are advised to be cautious. [Tickeron](https://tickeron.com/ticker/BOIL/)
-- Recent price forecasts suggest that BOIL is expected to reach an average price of $89.19 by the end of 2025, with a high prediction of $109.32. [Stockscan.io](https://stockscan.io/stocks/BOIL/forecast)
-- A buy signal was issued from a pivot bottom point on August 25, 2025, and since then, BOIL has risen by 14.66%, indicating potential for further price increase. [StockInvest.us](https://stockinvest.us/stock/BOIL)
-- Analysts provide a mixed outlook on BOIL, noting its volatility due to natural gas futures' fluctuations. This leverage makes BOIL both a risky and rewarding option depending on market momentum. [Yahoo Finance](https://finance.yahoo.com/quote/BOIL/)
-- ProShares Ultra Bloomberg Natural Gas ETF (BOIL) focuses on delivering 2x the daily returns of natural gas futures, targeting investors looking for leverage in energy commodities. [ProShares](https://www.proshares.com/our-etfs/leveraged-and-inverse/boil)
-- BOIL options data is available on MarketWatch, providing traders with insights into various maturity periods and potential hedging opportunities. [MarketWatch](https://www.marketwatch.com/investing/fund/boil/options)
-- Despite recent fluctuations, there is a noted AI score stability at 49, hinting at a steady performance horizon presently for BOIL. [Altindex](https://altindex.com/ticker/boil/price-prediction)
-- The historical data for August 2025 illustrates a rollercoaster pattern, with high volatility and trading volumes suggesting intense trader interest. [Yahoo Finance](https://finance.yahoo.com/quote/BOIL/history/)
-- BOIL's strategy appeals mainly to short-term traders who are experienced in navigating highly leveraged funds and are seeking to capitalize on short-term price movements in the natural gas markets. [Nasdaq](https://www.nasdaq.com/market-activity/etf/boil/news-headlines)
+- As of September 6, 2025, BOIL is trading at a price of $29.90, with a previous close of $30.90. The stock has fluctuated within a day range of $29.78 to $31.33 (source: Investing.com).
+- Aroon Indicator for BOIL entered a downward trend on September 5, 2025, suggesting a strong potential downward movement for the stock (source: Tickeron).
+- BOIL received a buy signal from a pivot bottom on August 25, 2025, indicating a potential rise of 14.66% since then. Further increases are expected until a new top is formed (source: StockInvest.us).
+- Analysts forecast that BOIL stock may reach an average price of $89.19 in 2025, with high and low predictions at $109.32 and lower levels, respectively (source: Stockscan.io).
+- BOIL aims to deliver two times the daily performance of the Bloomberg Natural Gas Subindex. The ETF is actively managing difficult conditions in the natural gas markets (source: ProShares).
+- Options data for BOIL suggests active trading, with MarketWatch providing details on options chains and pricing for different maturity periods.
+- ProShares Ultra Bloomberg Natural Gas (BOIL) is facing bearish market conditions, with recent price volatility and fluctuations impacting investor sentiment (source: Yahoo Finance & MarketWatch).
+- Recent market activity shows that ProShares Ultra Bloomberg Natural Gas had a -1.38% drop, closing at $30.06 on September 2, 2025 (source: Nasdaq).
+- Analysts from Nasdaq highlight the complex dynamics affecting BOIL, as natural gas market volatility continues to pose risks for leveraged ETFs.
+- BOIL ETF experiences ongoing, significant interest among traders and analysts, as natural gas prices remain a focal point for market speculation (source: Nasdaq & other stock market resources).
