@@ -1,19 +1,21 @@
-1. As of September 6, 2025, the BOIL ETF is trading at $29.90, slightly down from the previous close of $30.90, showing daily fluctuation within the range of $29.78 to $31.33. [Source](https://www.investing.com/etfs/proshares-ultra-dj-ubs-natural-gas)
+1. **Current Stock Price:** As of the latest data available from Yahoo Finance, the Direxion Daily TSLA Bull 2X Shares (TSLL) is quoted at $13.51. [Source](https://finance.yahoo.com/quote/TSLL/)
 
-2. BOIL, being a leveraged ETF, aims to deliver 2x the daily return of the Bloomberg Natural Gas Subindex, making it suitable for short-term traders focused on natural gas futures. [Source](https://www.proshares.com/our-etfs/leveraged-and-inverse/boil)
+2. **Price Forecast for 2025:** According to StocksCan, TSLL is forecasted to average around $9.0367 with a high prediction of $15.04 and a potential low estimate. [Source](https://stockscan.io/stocks/TSLL/forecast)
 
-3. Natural gas futures have been notably volatile throughout 2025, offering frequent double-digit trading opportunities beneficial for active traders using BOIL. [Source](https://tools.optionsai.com/companies/BOIL/news/bullish-trades)
+3. **Momentum Indicator:** Tickeron noted that as of September 3, 2025, TSLL’s Momentum Indicator moved above 0, suggesting a potential new upward trend in stock price. [Source](https://tickeron.com/ticker/TSLL/)
 
-4. Despite recent price drops, analysts have projected the BOIL ETF could reach an average price of $89.19 in 2025, with high targets at about $109.32, reflecting optimism for natural gas price rises. [Source](https://stockscan.io/stocks/BOIL/forecast)
+4. **Investment Strategy:** The Direxion Daily TSLA Bull 2X Shares (TSLL) aims for 200% of the daily performance of TSLA, as noted by multiple sources including CNBC. [Source](https://www.cnbc.com/quotes/TSLL)
 
-5. Moving Average Convergence Divergence (MACD) for BOIL has recently turned positive, which historically signals potential upward momentum for this ETF. [Source](https://tickeron.com/ticker/BOIL/)
+5. **Price Movement:** On September 5, 2025, Investing.com discussed TSLL's news and analysis, mentioning notable events like Tesla's trillion-dollar deal, which could affect the leverage product. [Source](https://www.investing.com/etfs/tsll)
 
-6. Analysts from StockInvest.us noted a small price decline of -0.483% for BOIL on September 4, 2025, with intraday volatility reaching 6.48%, a reflection of natural gas market dynamics. [Source](https://stockinvest.us/stock/BOIL)
+6. **Analyst Ratings:** AltIndex provides an AI-based score for TSLL, indicating stability in its forecast. [Source](https://altindex.com/ticker/tsll/price-prediction)
 
-7. Press releases from Nasdaq have highlighted BOIL's recent strategy adjustments and trading performance updates, reflecting ongoing adaptability to natural gas market trends. [Source](https://www.nasdaq.com/market-activity/etf/boil/press-releases)
+7. **Performance Report:** Robinhood reports a 32.02% price return year-on-year as of August 31, 2025, indicating a positive performance metric for investors. [Source](https://robinhood.com/us/en/stocks/TSLL/)
 
-8. In light of ongoing trading opportunities, BOIL is labeled as a leveraged ETF particularly advantageous for traders looking to exploit short-term movements in the natural gas futures market. [Source](https://seekingalpha.com/article/4814530-boil-leveraged-natural-gas-etf-for-active-traders)
+8. **Options Trading:** Yahoo Finance lists options for TSLL, such as the August 2025 $14.500 put options, providing traders flexibility in positioning around TSLL’s strategy. [Source](https://finance.yahoo.com/quote/TSLL250829P00014500/)
 
-9. The ProShares Ultra Bloomberg Natural Gas options chain illustrates the pricing dynamics over multiple maturity periods, helping investors gauge future price movements of BOIL. [Source](https://www.marketwatch.com/investing/fund/boil/options)
+9. **Leveraged ETF Strategy:** The fund is designed for 200% daily leverage concerning the Tesla stock, which is crucial for day traders seeking amplified exposure. [Source](https://www.direxion.com/product/daily-tsla-bull-and-bear-leveraged-single-stock-etfs)
 
-10. Overall investment sentiment remains cautiously optimistic with potential stability as indicated by varying forecasts, suggesting both risks and opportunities in BOIL's trading performance in volatile energy markets. [Source](https://altindex.com/ticker/boil/price-prediction)
+10. **Historical Data Insights:** Nasdaq provides historical data and advanced charting tools, supporting investors in making educated decisions based on past TSLL performances. [Source](https://www.nasdaq.com/market-activity/etf/tsll)
+
+These bullet points provide a rounded perspective on TSLL’s current stock environment, investment outlook, and strategic positioning in the market.
