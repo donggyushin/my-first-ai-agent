@@ -32,8 +32,14 @@ FIRECRAWL_API_KEY="your_firecrawl_api_key" (선택사항 - 뉴스 분석용)
 
 ### 2. 실행
 ```bash
-# 의존성 설치 및 시스템 실행
+# 기본 시스템 실행 (추천 + 상세 분석)
 uv run python main.py
+
+# 빠른 추천 시스템만 테스트
+uv run python test_recommendation_only.py
+
+# HTML 보고서 생성 테스트
+uv run python test_report.py
 ```
 
 ### 3. 사용법
@@ -113,6 +119,9 @@ uv run python main.py
 ```
 my-first-ai-agent/
 ├── main.py                           # 메인 실행 파일 (로깅 & 에러처리 강화)
+├── main_old.py                       # 이전 버전 (참조용)
+├── test_recommendation_only.py       # 추천 시스템 단독 테스트
+├── test_report.py                   # HTML 보고서 생성 테스트
 ├── .env                             # API 키 환경변수
 ├── pyproject.toml                   # UV 프로젝트 설정
 ├── .gitignore                       # Git 제외 패턴 (보안 강화)
@@ -124,12 +133,15 @@ my-first-ai-agent/
 │   ├── financial_tools.py             # 밸류에이션 & 재무건전성
 │   ├── news_sentiment_tool.py         # 뉴스 감정 분석
 │   └── firecrawl_tool.py             # 웹 스크래핑 도구
-├── utils/                           # 시스템 유틸리티 (신규)
-│   └── logger.py                     # 로깅 시스템 (일별 로그 파일)
-├── config/                          # 설정 관리 (신규)
+├── utils/                           # 시스템 유틸리티
+│   ├── logger.py                     # 로깅 시스템 (일별 로그 파일)
+│   └── report_generator.py           # HTML 보고서 생성기 (신규)
+├── config/                          # 설정 관리
 │   └── constants.py                  # 중앙집중식 상수 관리
-└── logs/                            # 자동 생성 로그 디렉토리
-    └── investment_advisor_YYYYMMDD.log
+├── logs/                            # 자동 생성 로그 디렉토리
+│   └── investment_advisor_YYYYMMDD.log
+└── reports/                         # HTML 보고서 출력 디렉토리 (신규)
+    └── investment_report_YYYYMMDD_HHMMSS.html
 ```
 
 ## 🔧 기술 스택
@@ -150,13 +162,16 @@ my-first-ai-agent/
 
 ## 🌟 시스템 장점 & 최근 개선사항
 
-### 🚀 2025-09-07 업데이트 (v2.0)
+### 🚀 2025-09-08 업데이트 (v2.1)
 - ✅ **AI 추천 시스템**: 30개 인기 종목에서 TOP 5 자동 선별
 - ✅ **로깅 시스템**: 모든 분석 과정을 `logs/` 폴더에 자동 기록
 - ✅ **설정 관리**: 중앙집중식 상수 관리로 유지보수성 향상
 - ✅ **에러 처리**: 강화된 예외 처리 및 사용자 친화적 오류 메시지
 - ✅ **메모리 최적화**: 대용량 데이터 처리 시 메모리 사용량 최적화
 - ✅ **보안 강화**: API 키 보호 및 민감 정보 .gitignore 처리
+- 🆕 **HTML 보고서**: 전문적인 HTML 형태 보고서 생성 기능 추가
+- 🆕 **모듈형 테스팅**: 구성요소별 개별 테스트 스크립트 제공
+- 🆕 **개선된 UI**: 더 나은 사용자 경험과 보고서 시각화
 
 ### 기존 시스템 대비 개선점
 - ❌ **기존**: Mock 데이터, 가짜 미래 날짜, 단순 오류 처리
@@ -168,6 +183,8 @@ my-first-ai-agent/
 - 🤖 **AI 판단**: GPT-4o 기반 종합 결정
 - 💡 **실용적 조언**: 구체적 매매 타이밍 및 목표가
 - 📋 **추적 가능**: 모든 분석 과정 로그 기록 및 모니터링
+- 📄 **전문적 보고서**: HTML 형태의 시각적이고 공유하기 쉬운 보고서
+- ⚡ **모듈형 테스트**: 빠른 개발과 디버깅을 위한 구성요소별 테스트
 
 ## 🧪 테스트 & 검증
 
@@ -184,15 +201,20 @@ uv run python -c "from utils.logger import setup_logger; logger = setup_logger()
 
 # 설정 시스템 테스트
 uv run python -c "from config.constants import MESSAGE_TEMPLATES; print('✅ Config loaded:', len(MESSAGE_TEMPLATES), 'templates')"
+
+# HTML 보고서 생성 테스트 (신규)
+uv run python -c "from utils.report_generator import generate_html_report; print('✅ Report generator test successful')"
 ```
 
-### 테스트 결과 (2025-09-07)
+### 테스트 결과 (2025-09-08)
 ```
 ✅ 기본 import 테스트: 통과
 ✅ 환경변수 및 설정 검증: 통과  
 ✅ 개별 모듈 기능 테스트: 통과
 ✅ 전체 시스템 통합 테스트: 통과
 ✅ 실시간 데이터 수집: 통과 (25/30 종목 성공)
+✅ HTML 보고서 생성: 통과 (마크다운 → HTML 변환)
+✅ 모듈별 개별 테스트: 통과 (추천 시스템, 보고서 생성기)
 ```
 
 ---

@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Development Commands
 - `uv run python main.py` - Run the main investment advisory system
+- `uv run python test_recommendation_only.py` - Test only the recommendation system (faster testing)
+- `uv run python test_report.py` - Test HTML report generation functionality
 - `uv sync` - Install/update dependencies using UV package manager 
 - `uv add <package>` - Add new dependencies to pyproject.toml
 
@@ -14,6 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `uv run python -c "from crews.investment_item_recommendar_crew import InvestmentItemRecommendarCrew; crew = InvestmentItemRecommendarCrew(); print('✅ Crew created')"` - Test crew instantiation
 - `uv run python -c "from utils.logger import setup_logger; logger = setup_logger(); print('✅ Logger test successful')"` - Test logging system
 - `uv run python -c "from config.constants import MESSAGE_TEMPLATES; print('✅ Config loaded:', len(MESSAGE_TEMPLATES), 'templates')"` - Test configuration system
+- `uv run python -c "from utils.report_generator import generate_html_report; print('✅ Report generator test successful')"` - Test HTML report generation
 
 ## Architecture Overview
 
@@ -35,6 +38,12 @@ A sequential 3-agent system for detailed single-stock analysis:
 2. Then prompts user for detailed analysis of a specific ticker
 3. Runs the Individual Stock Analysis crew for the chosen ticker
 4. Outputs comprehensive investment report with specific recommendations
+5. **NEW**: Optional HTML report generation for better visualization and sharing
+
+### Alternative Execution Modes
+- **`test_recommendation_only.py`**: Quick testing of recommendation system only
+- **`test_report.py`**: Testing HTML report generation with sample data
+- **`main_old.py`**: Previous version maintained for reference
 
 ## Key Technical Components
 
@@ -46,6 +55,7 @@ A sequential 3-agent system for detailed single-stock analysis:
 
 ### System Infrastructure (`utils/`, `config/`)
 - **utils/logger.py**: Comprehensive logging system with daily log files and structured error tracking
+- **utils/report_generator.py**: HTML report generation with markdown-to-HTML conversion and professional styling
 - **config/constants.py**: Centralized configuration management for weights, thresholds, and templates
 - Automated log rotation and error tracking for production monitoring
 
@@ -113,32 +123,38 @@ The system uses Korean for user interface and reports while maintaining English 
 ```
 my-first-ai-agent/
 ├── main.py                     # Main entry point with improved error handling
-├── .env                        # Environment variables (API keys)
-├── pyproject.toml             # UV package management
-├── CLAUDE.md                  # This file
-├── README.md                  # Project documentation
-├── .gitignore                 # Git ignore patterns
-├── crews/                     # CrewAI agent definitions
+├── main_old.py                 # Previous version for reference
+├── test_recommendation_only.py # Quick recommendation system testing
+├── test_report.py             # HTML report generation testing
+├── .env                       # Environment variables (API keys)
+├── pyproject.toml            # UV package management
+├── CLAUDE.md                 # This file
+├── README.md                 # Project documentation
+├── .gitignore                # Git ignore patterns
+├── crews/                    # CrewAI agent definitions
 │   ├── __init__.py
 │   ├── investment_advisor_crew.py      # 3-agent analysis crew
 │   └── investment_item_recommendar_crew.py  # 2-agent recommendation crew
-├── tools/                     # Analysis tools and data sources
+├── tools/                    # Analysis tools and data sources
 │   ├── __init__.py
 │   ├── advanced_stock_analysis.py     # Technical analysis engine
 │   ├── financial_tools.py            # Valuation and health metrics
 │   ├── news_sentiment_tool.py        # News sentiment analysis
 │   └── firecrawl_tool.py            # Web scraping utilities
-├── utils/                     # System utilities (NEW)
+├── utils/                    # System utilities
 │   ├── __init__.py
-│   └── logger.py                     # Comprehensive logging system
-├── config/                    # Configuration management (NEW)
+│   ├── logger.py                     # Comprehensive logging system
+│   └── report_generator.py           # HTML report generation (NEW)
+├── config/                   # Configuration management
 │   ├── __init__.py
 │   └── constants.py                  # Centralized constants and settings
-└── logs/                      # Generated log files (AUTO-CREATED)
-    └── investment_advisor_YYYYMMDD.log
+├── logs/                     # Generated log files (AUTO-CREATED)
+│   └── investment_advisor_YYYYMMDD.log
+└── reports/                  # Generated HTML reports (AUTO-CREATED)
+    └── investment_report_YYYYMMDD_HHMMSS.html
 ```
 
-## Recent Improvements (2025-09-07)
+## Recent Improvements (2025-09-08)
 
 ### 🔧 System Enhancements
 1. **Logging System**: Added comprehensive logging with daily rotation and error tracking
@@ -146,15 +162,29 @@ my-first-ai-agent/
 3. **Memory Optimization**: Improved memory management for batch stock processing
 4. **Security**: Enhanced API key protection and input validation
 5. **Error Handling**: Robust error handling with user-friendly messages and detailed logging
+6. **HTML Report Generation**: Professional HTML reports with markdown conversion and styling
+7. **Testing Suite**: Dedicated test scripts for different components
 
 ### 🧪 Testing Infrastructure
 - Complete test coverage for all modules and integrations
 - Automated validation of imports, configurations, and core functionalities
 - End-to-end system testing with real data sources
 - Performance and memory usage validation
+- **NEW**: Isolated testing scripts (`test_recommendation_only.py`, `test_report.py`)
+- **NEW**: HTML report generation testing with sample data
 
 ### 📊 Production Readiness
 - Structured logging for monitoring and debugging
 - Graceful error handling and recovery mechanisms
 - Resource cleanup and memory management
 - Security best practices implementation
+- **NEW**: Professional HTML report output for sharing and presentation
+- **NEW**: Modular testing approach for faster development cycles
+
+### 📋 HTML Report Generation Features
+- **Markdown to HTML Conversion**: Clean conversion with proper styling
+- **Professional Layout**: CSS styling with proper typography and spacing
+- **Responsive Design**: Works well on different screen sizes
+- **Data Visualization**: Tables and structured data display
+- **Export Ready**: Easily shareable HTML files with embedded styles
+- **Auto-Generated Filenames**: Timestamped files in `reports/` directory
