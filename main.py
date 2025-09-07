@@ -41,9 +41,16 @@ class LatestStcokCrew():
 
 if __name__ == "__main__":
     crew = LatestStcokCrew()
-
-    # BOIL 주식에 대한 연구 실행
-    result = crew.crew().kickoff(inputs={"topic": "BOIL"})
-
+    
+    # 유저로부터 주식 티커 또는 회사명 입력받기
+    topic = input("연구하고 싶은 주식 티커나 회사명을 입력하세요: ")
+    
+    print(f"\n'{topic}'에 대한 주식 연구를 시작합니다...\n")
+    
+    # 입력받은 주제로 연구 실행
+    result = crew.crew().kickoff(inputs={"topic": topic})
+    
+    print("\n" + "="*50)
     print("연구 결과:")
+    print("="*50)
     print(result)
