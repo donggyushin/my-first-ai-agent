@@ -1821,6 +1821,8 @@ dependencies = [
     { name = "dotenv" },
     { name = "numpy" },
     { name = "openai" },
+    { name = "pandas" },
+    { name = "requests" },
     { name = "yfinance" },
 ]
 
@@ -1836,6 +1838,8 @@ requires-dist = [
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "numpy", specifier = ">=2.3.2" },
     { name = "openai", specifier = ">=1.106.1" },
+    { name = "pandas", specifier = ">=2.2.0" },
+    { name = "requests", specifier = ">=2.31.0" },
     { name = "yfinance", specifier = ">=0.2.65" },
 ]
 

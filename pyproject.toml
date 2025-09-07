@@ -11,6 +11,8 @@ dependencies = [
     "numpy>=2.3.2",
     "openai>=1.106.1",
     "yfinance>=0.2.65",
+    "pandas>=2.2.0",
+    "requests>=2.31.0",
 ]
 
 [dependency-groups]
