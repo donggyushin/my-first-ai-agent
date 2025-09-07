@@ -1,0 +1,699 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 투자 종합 분석 보고서</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .card h2 {
+            color: #5a67d8;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .summary-item {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+        }
+        
+        .summary-item.warning {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+        }
+        
+        .summary-item h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-item p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .recommendation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stock-card {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stock-card:hover {
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
+            transform: translateY(-3px);
+        }
+        
+        .stock-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, #5a67d8, #667eea);
+        }
+        
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .stock-ticker {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+        
+        .score-badge {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .score-badge.high {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+        }
+        
+        .score-badge.medium {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+        }
+        
+        .score-badge.low {
+            background: linear-gradient(135deg, #e53e3e, #c53030);
+        }
+        
+        .stock-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+        
+        .analysis-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #5a67d8;
+        }
+        
+        .analysis-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .analysis-content h1 {
+            font-size: 1.8rem;
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #5a67d8;
+            font-weight: 700;
+        }
+        
+        .analysis-content h2 {
+            font-size: 1.3rem;
+            color: #4a5568;
+            margin: 1.5rem 0 1rem 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .analysis-content h3 {
+            font-size: 1.1rem;
+            color: #2d3748;
+            margin: 1rem 0 0.5rem 0;
+            font-weight: 600;
+        }
+        
+        .analysis-content ul, .analysis-content ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .analysis-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .analysis-content strong {
+            color: #2d3748;
+            font-weight: 700;
+        }
+        
+        .analysis-content .metric-highlight {
+            background: linear-gradient(135deg, #e6fffa, #b2f5ea);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #234e52;
+            display: inline-block;
+            margin: 0.2rem;
+        }
+        
+        .analysis-content .investment-recommendation {
+            background: linear-gradient(135deg, #fed7d7, #feb2b2);
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        
+        .analysis-content .investment-recommendation.buy {
+            background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+            border-left-color: #38a169;
+        }
+        
+        .analysis-content .investment-recommendation.hold {
+            background: linear-gradient(135deg, #fef5e7, #fbd38d);
+            border-left-color: #ed8936;
+        }
+        
+        .analysis-content .risk-warning {
+            background: linear-gradient(135deg, #fed7d7, #fc8181);
+            border: 1px solid #e53e3e;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            color: #742a2a;
+        }
+        
+        .error-card {
+            background: linear-gradient(135deg, #fed7d7, #feb2b2);
+            border: 1px solid #fc8181;
+            color: #742a2a;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .error-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .timestamp {
+            font-size: 0.85rem;
+            color: #718096;
+            font-style: italic;
+        }
+        
+        .footer {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            color: #4a5568;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin-top: 3rem;
+        }
+        
+        .footer h3 {
+            color: #e53e3e;
+            margin-bottom: 1rem;
+        }
+        
+        .footer p {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .summary-grid,
+            .recommendation-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stock-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="header">
+            <h1>🤖 AI 투자 종합 분석 보고서</h1>
+            <p class="subtitle">생성일시: 2025년 09월 08일 00:08:00</p>
+        </div>
+    
+        
+        <div class="card">
+            <h2>📊 분석 요약</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <h3>5</h3>
+                    <p>AI 추천 종목 수</p>
+                </div>
+                <div class="summary-item">
+                    <h3>5</h3>
+                    <p>성공적 분석 완료</p>
+                </div>
+                
+            </div>
+        </div>
+    
+        
+        <div class="card">
+            <h2>🎯 AI 추천 종목 개요</h2>
+            <div class="recommendation-grid">
+    
+            <div class="stock-card">
+                <div class="stock-header">
+                    <div>
+                        <div class="stock-ticker">1. AAPL</div>
+                        <div style="font-size: 0.9rem; color: #718096;">Apple Inc.</div>
+                    </div>
+                    <div class="score-badge high">87.5/100</div>
+                </div>
+                <div class="stock-details">
+                    <div><strong>현재가:</strong> $150.25</div>
+                    <div><strong>RSI:</strong> 45.2</div>
+                </div>
+            </div>
+        
+            <div class="stock-card">
+                <div class="stock-header">
+                    <div>
+                        <div class="stock-ticker">2. MSFT</div>
+                        <div style="font-size: 0.9rem; color: #718096;">Microsoft Corporation</div>
+                    </div>
+                    <div class="score-badge high">85.3/100</div>
+                </div>
+                <div class="stock-details">
+                    <div><strong>현재가:</strong> $305.5</div>
+                    <div><strong>RSI:</strong> 50.1</div>
+                </div>
+            </div>
+        
+            <div class="stock-card">
+                <div class="stock-header">
+                    <div>
+                        <div class="stock-ticker">3. GOOGL</div>
+                        <div style="font-size: 0.9rem; color: #718096;">Alphabet Inc.</div>
+                    </div>
+                    <div class="score-badge high">84.7/100</div>
+                </div>
+                <div class="stock-details">
+                    <div><strong>현재가:</strong> $2800.75</div>
+                    <div><strong>RSI:</strong> 48.6</div>
+                </div>
+            </div>
+        
+            <div class="stock-card">
+                <div class="stock-header">
+                    <div>
+                        <div class="stock-ticker">4. AMZN</div>
+                        <div style="font-size: 0.9rem; color: #718096;">Amazon.com, Inc.</div>
+                    </div>
+                    <div class="score-badge high">83.9/100</div>
+                </div>
+                <div class="stock-details">
+                    <div><strong>현재가:</strong> $3400.1</div>
+                    <div><strong>RSI:</strong> 47.3</div>
+                </div>
+            </div>
+        
+            <div class="stock-card">
+                <div class="stock-header">
+                    <div>
+                        <div class="stock-ticker">5. TSLA</div>
+                        <div style="font-size: 0.9rem; color: #718096;">Tesla, Inc.</div>
+                    </div>
+                    <div class="score-badge high">82.5/100</div>
+                </div>
+                <div class="stock-details">
+                    <div><strong>현재가:</strong> $750.3</div>
+                    <div><strong>RSI:</strong> 49.0</div>
+                </div>
+            </div>
+        
+            </div>
+        </div>
+    
+        
+        <div class="card">
+            <h2>📈 상세 투자 분석 결과</h2>
+    
+            <div class="analysis-section">
+                <h3 style="color: #2d3748; margin-bottom: 1rem;">
+                    1. AAPL (Apple Inc.) 
+                    <span style="font-size: 0.8rem; color: #718096;">- 추천점수: 87.5/100</span>
+                </h3>
+                <div class="timestamp">분석 완료: 2025-09-08 00:05:59</div>
+                <div class="analysis-content"><div class="investment-recommendation buy"><p>```</p>
+<p>Thought: Given the provided context, I have all the necessary information to compile the final investment decision report for AAPL. I will now proceed to synthesize the data into the required format.</p>
+<p>```</p>
+<br>
+<p><h1>최종 투자 결정 보고서: AAPL</h1></p>
+<br>
+<p><h2>📊 종합 분석 결과</h2></p>
+<ul>
+<li><strong>최종 투자 점수</strong>: 73.<span class="metric-highlight">64/100</span> (뉴스 감정: 65.4점 + 기술적 분석: 80점)</li>
+<li><strong>투자 권고</strong>: 매수</li>
+<li><strong>신뢰도</strong>: 보통</li>
+</ul>
+<br>
+<p><h2>🎯 투자 전략</h2></p>
+<ul>
+<li><strong>추천 투자 비중</strong>: 포트폴리오의 15%</li>
+<li><strong>목표 가격</strong>: $250 (상승 여력: <span class="metric-highlight">4.3%</span>)</li>
+<li><strong>손절매 가격</strong>: $230 (하락 위험: <span class="metric-highlight">4.1%</span>)</li>
+<li><strong>투자 기간</strong>: 중기</li>
+</ul>
+<br>
+<p><h2>⚖️ 리스크 분석</h2></p>
+<ul>
+<li><strong>주요 리스크</strong>:</li>
+</ul>
+<p>  1. iPhone 이벤트에 대한 부정적인 반응</p>
+<p>  2. 높은 PER로 인한 고평가 우려</p>
+<p>  3. 부채비율 증가로 인한 재무 리스크</p>
+<ul>
+<li><strong>리스크 수준</strong>: 보통</li>
+<li><strong>대응 방안</strong>: </li>
+</ul>
+<p>  - iPhone 이벤트 후 시장 반응 모니터링</p>
+<p>  - PER 및 부채비율 개선 여부 지속 관찰</p>
+<p>  - 손절매 가격 설정을 통한 리스크 관리</p>
+<br>
+<p><h2>💡 핵심 투자 포인트</h2></p>
+<p>1. <strong>매수 이유</strong>: Apple의 AI 기술 발전과 Warren Buffett의 추천으로 인한 긍정적 투자 신호</p>
+<p>2. <strong>주의사항</strong>: iPhone 이벤트에 대한 시장 반응 및 재무 건전성 지표 주의</p>
+<p>3. <strong>모니터링 지표</strong>: RSI, 이동평균선, 거래량, PER, 부채비율</p>
+<br>
+<p><h2>⚠️ 면책조항</h2></p>
+<p>본 분석은 투자 참고용이며, 최종 투자 결정은 본인의 책임입니다.</p></div></div>
+            </div>
+        
+            <div class="analysis-section">
+                <h3 style="color: #2d3748; margin-bottom: 1rem;">
+                    2. MSFT (Microsoft Corporation) 
+                    <span style="font-size: 0.8rem; color: #718096;">- 추천점수: 85.3/100</span>
+                </h3>
+                <div class="timestamp">분석 완료: 2025-09-08 00:06:25</div>
+                <div class="analysis-content"><div class="investment-recommendation buy"><p><h1>최종 투자 결정 보고서: MSFT</h1></p>
+<br>
+<p><h2>📊 종합 분석 결과</h2></p>
+<ul>
+<li><strong>최종 투자 점수</strong>: 76.<span class="metric-highlight">6/100</span> (뉴스 감정: 77점 + 기술적 분석: 76점)</li>
+<li><strong>투자 권고</strong>: 매수</li>
+<li><strong>신뢰도</strong>: 보통</li>
+</ul>
+<br>
+<p><h2>🎯 투자 전략</h2></p>
+<ul>
+<li><strong>추천 투자 비중</strong>: 포트폴리오의 15%</li>
+<li><strong>목표 가격</strong>: $520 (상승 여력: 5%)</li>
+<li><strong>손절매 가격</strong>: $470 (하락 위험: 5%)</li>
+<li><strong>투자 기간</strong>: 중기</li>
+</ul>
+<br>
+<p><h2>⚖️ 리스크 분석</h2></p>
+<ul>
+<li><strong>주요 리스크</strong>: </li>
+</ul>
+<p>  1. AI 피로감으로 인한 시장 회의론</p>
+<p>  2. 고평가된 PER로 인한 밸류에이션 리스크</p>
+<p>  3. 글로벌 경제 불확실성</p>
+<ul>
+<li><strong>리스크 수준</strong>: 보통</li>
+<li><strong>대응 방안</strong>: </li>
+</ul>
+<p>  - AI 관련 뉴스 및 시장 반응 지속 모니터링</p>
+<p>  - 밸류에이션 조정 시점에 따른 포트폴리오 재조정</p>
+<p>  - 글로벌 경제 지표 및 환율 변동성 주시</p>
+<br>
+<p><h2>💡 핵심 투자 포인트</h2></p>
+<p>1. <strong>매수 이유</strong>: MSFT는 과매도 상태로 기술적 지표상 매수 기회가 있으며, 재무 건전성이 우수합니다.</p>
+<p>2. <strong>주의사항</strong>: 고평가된 PER로 인해 밸류에이션 리스크가 존재하므로, 적정 가격대 내에서 매수 기회를 모색해야 합니다.</p>
+<p>3. <strong>모니터링 지표</strong>: RSI, 이동평균선, 거래량, AI 관련 뉴스 및 시장 반응</p>
+<br>
+<p><h2>⚠️ 면책조항</h2></p>
+<p>본 분석은 투자 참고용이며, 최종 투자 결정은 본인의 책임입니다.</p></div></div>
+            </div>
+        
+            <div class="analysis-section">
+                <h3 style="color: #2d3748; margin-bottom: 1rem;">
+                    3. GOOGL (Alphabet Inc.) 
+                    <span style="font-size: 0.8rem; color: #718096;">- 추천점수: 84.7/100</span>
+                </h3>
+                <div class="timestamp">분석 완료: 2025-09-08 00:06:56</div>
+                <div class="analysis-content"><div class="investment-recommendation buy"><p>```</p>
+<p>Thought: 뉴스 감정 분석과 기술적 분석 결과를 종합하여 최종 투자 결정을 내리기 위해, 주어진 데이터를 바탕으로 가중 평균을 계산하고 투자 전략을 제시해야 합니다.</p>
+<p>```</p>
+<br>
+<p><h1>최종 투자 결정 보고서: GOOGL</h1></p>
+<br>
+<p><h2>📊 종합 분석 결과</h2></p>
+<ul>
+<li><strong>최종 투자 점수</strong>: 77.<span class="metric-highlight">08/100</span> (뉴스 감정: 72.2점 + 기술적 분석: 81점)</li>
+<li><strong>투자 권고</strong>: 매수</li>
+<li><strong>신뢰도</strong>: 높음</li>
+</ul>
+<br>
+<p><h2>🎯 투자 전략</h2></p>
+<ul>
+<li><strong>추천 투자 비중</strong>: 포트폴리오의 15%</li>
+<li><strong>목표 가격</strong>: $250 (상승 여력: <span class="metric-highlight">6.38%</span>)</li>
+<li><strong>손절매 가격</strong>: $220 (하락 위험: <span class="metric-highlight">6.38%</span>)</li>
+<li><strong>투자 기간</strong>: 중기</li>
+</ul>
+<br>
+<p><h2>⚖️ 리스크 분석</h2></p>
+<ul>
+<li><strong>주요 리스크</strong>: </li>
+</ul>
+<p>  1. 시장 변동성 증가</p>
+<p>  2. 기술적 조정 가능성 (RSI 과매수 상태)</p>
+<p>  3. 글로벌 경제 불확실성</p>
+<ul>
+<li><strong>리스크 수준</strong>: 보통</li>
+<li><strong>대응 방안</strong>: </li>
+</ul>
+<p>  - 손절매 가격 설정을 통해 하락 리스크 관리</p>
+<p>  - 시장 변동성 증가 시 포트폴리오 다각화</p>
+<p>  - 경제 지표 및 글로벌 뉴스 모니터링</p>
+<br>
+<p><h2>💡 핵심 투자 포인트</h2></p>
+<p>1. <strong>매수 이유</strong>: 강한 기술적 상승 추세와 긍정적인 뉴스 흐름</p>
+<p>2. <strong>주의사항</strong>: 과매수 상태로 인한 단기 조정 가능성</p>
+<p>3. <strong>모니터링 지표</strong>: RSI, 거래량, 글로벌 경제 지표</p>
+<br>
+<p><h2>⚠️ 면책조항</h2></p>
+<p>본 분석은 투자 참고용이며, 최종 투자 결정은 본인의 책임입니다.</p></div></div>
+            </div>
+        
+            <div class="analysis-section">
+                <h3 style="color: #2d3748; margin-bottom: 1rem;">
+                    4. AMZN (Amazon.com, Inc.) 
+                    <span style="font-size: 0.8rem; color: #718096;">- 추천점수: 83.9/100</span>
+                </h3>
+                <div class="timestamp">분석 완료: 2025-09-08 00:07:33</div>
+                <div class="analysis-content"><div class="investment-recommendation buy"><p><h1>최종 투자 결정 보고서: AMZN</h1></p>
+<br>
+<p><h2>📊 종합 분석 결과</h2></p>
+<ul>
+<li><strong>최종 투자 점수</strong>: 70.<span class="metric-highlight">44/100</span> (뉴스 감정: 57.4점 + 기술적 분석: 80점)</li>
+<li><strong>투자 권고</strong>: 매수</li>
+<li><strong>신뢰도</strong>: 보통</li>
+</ul>
+<br>
+<p><h2>🎯 투자 전략</h2></p>
+<ul>
+<li><strong>추천 투자 비중</strong>: 포트폴리오의 15%</li>
+<li><strong>목표 가격</strong>: $250 (상승 여력: <span class="metric-highlight">7.6%</span>)</li>
+<li><strong>손절매 가격</strong>: $210 (하락 위험: <span class="metric-highlight">9.6%</span>)</li>
+<li><strong>투자 기간</strong>: 중기</li>
+</ul>
+<br>
+<p><h2>⚖️ 리스크 분석</h2></p>
+<ul>
+<li><strong>주요 리스크</strong>: </li>
+</ul>
+<p>  1. 운영 정책 변화로 인한 소비자 반발 가능성</p>
+<p>  2. 시장 소비 패턴 변화에 따른 매출 변동</p>
+<p>  3. 높은 PER로 인한 고평가 리스크</p>
+<ul>
+<li><strong>리스크 수준</strong>: 보통</li>
+<li><strong>대응 방안</strong>: </li>
+</ul>
+<p>  - 운영 정책 변화에 대한 시장 반응 모니터링</p>
+<p>  - 소비자 행동 변화에 따른 매출 추이 분석</p>
+<p>  - 고평가 리스크를 감안한 분할 매수 전략</p>
+<br>
+<p><h2>💡 핵심 투자 포인트</h2></p>
+<p>1. <strong>매수 이유</strong>: 기술적 분석에서 강한 매수 신호와 재무 건전성의 우수함</p>
+<p>2. <strong>주의사항</strong>: 높은 PER로 인한 고평가 상태</p>
+<p>3. <strong>모니터링 지표</strong>: RSI, 이동평균선, 소비자 행동 변화</p>
+<br>
+<p><h2>⚠️ 면책조항</h2></p>
+<p>본 분석은 투자 참고용이며, 최종 투자 결정은 본인의 책임입니다.</p></div></div>
+            </div>
+        
+            <div class="analysis-section">
+                <h3 style="color: #2d3748; margin-bottom: 1rem;">
+                    5. TSLA (Tesla, Inc.) 
+                    <span style="font-size: 0.8rem; color: #718096;">- 추천점수: 82.5/100</span>
+                </h3>
+                <div class="timestamp">분석 완료: 2025-09-08 00:08:00</div>
+                <div class="analysis-content"><p>The comprehensive investment decision report for TSLA has been provided above, synthesizing both news sentiment and technical analysis to offer a balanced investment strategy.</p></div>
+            </div>
+        
+        </div>
+    
+        
+        
+        <div class="footer">
+            <h3>⚠️ 투자 위험 고지</h3>
+            <p>
+                본 분석 보고서는 AI 기반 투자 참고 자료로서 투자 권유나 종목 추천을 위한 것이 아닙니다. 
+                모든 투자 결정은 투자자 본인의 판단과 책임 하에 이루어져야 하며, 
+                투자 시 발생할 수 있는 손실에 대해서는 투자자가 모든 책임을 집니다. 
+                <br><br>
+                <strong>과거 수익률이 미래 수익률을 보장하지 않으며, 투자 전 충분한 검토와 전문가 상담을 권장합니다.</strong>
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">
+                Generated by AI Investment Analysis System
+            </p>
+        </div>
+    
+    </div>
+    
+    <script>
+        
+        // 페이지 로드 시 애니메이션
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card, .stock-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+        
+        // 스크롤 시 헤더 고정 효과
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.position = 'sticky';
+                header.style.top = '0';
+                header.style.zIndex = '1000';
+            } else {
+                header.style.position = 'static';
+            }
+        });
+    
+    </script>
+</body>
+</html>

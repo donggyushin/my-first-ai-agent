@@ -44,26 +44,69 @@ def analyze_all_recommendations():
         
         # JSON 형태로 결과 파싱
         try:
-            if isinstance(recommendation_result, str):
-                # 결과에서 JSON 부분 추출 (더 정확한 정규식 사용)
-                json_match = re.search(r'\[[\s\S]*?\]', recommendation_result)
-                if json_match:
-                    recommendations = json.loads(json_match.group())
-                    print("\n📊 AI 추천 투자 종목 TOP 5:")
-                    print("-" * 40)
-                    for i, stock in enumerate(recommendations, 1):
-                        print(f"{i}. {stock['ticker']} ({stock.get('name', stock['ticker'])})")
-                        print(f"   현재가: ${stock.get('current_price', 'N/A')}")
-                        print(f"   AI 점수: {stock.get('score', 'N/A')}/100")
-                        print(f"   RSI: {stock.get('rsi', 'N/A')}")
-                        print()
-                else:
-                    logger.warning("추천 결과에서 JSON 형식을 찾을 수 없습니다")
-                    print(f"\n⚠️ 추천 결과 파싱 실패. 원본 결과:\n{recommendation_result}")
-                    return
+            # CrewOutput 객체인 경우 raw 텍스트 추출
+            if hasattr(recommendation_result, 'raw'):
+                result_text = recommendation_result.raw
+                print(f"\n🔍 CrewOutput 추출 성공! 텍스트 길이: {len(str(result_text))}")
+            elif isinstance(recommendation_result, str):
+                result_text = recommendation_result
+                print(f"\n🔍 문자열 결과 확인! 길이: {len(result_text)}")
             else:
-                logger.warning("추천 결과가 예상된 문자열 형식이 아닙니다")
-                print(f"\n⚠️ 예상치 못한 추천 결과 형식: {type(recommendation_result)}")
+                # 다른 속성들 시도
+                if hasattr(recommendation_result, 'result'):
+                    result_text = str(recommendation_result.result)
+                elif hasattr(recommendation_result, 'output'):
+                    result_text = str(recommendation_result.output)
+                else:
+                    result_text = str(recommendation_result)
+                print(f"\n🔍 객체를 문자열로 변환! 타입: {type(recommendation_result)}")
+            
+            print(f"📋 결과 미리보기: {str(result_text)[:300]}...")
+            
+            # 다양한 JSON 패턴으로 파싱 시도
+            patterns = [
+                r'\[[\s\S]*?\]',  # 기본 JSON 배열
+                r'```json\s*(\[.*?\])\s*```',  # 마크다운 JSON 코드 블록
+                r'```\s*(\[.*?\])\s*```',      # 일반 코드 블록
+                r'(\[.*?\])',                   # 단순 배열 패턴
+            ]
+            
+            found_json = False
+            for i, pattern in enumerate(patterns):
+                print(f"🔎 패턴 {i+1} 시도: {pattern}")
+                json_match = re.search(pattern, result_text, re.DOTALL)
+                if json_match:
+                    json_text = json_match.group(1) if json_match.groups() else json_match.group()
+                    print(f"✅ JSON 패턴 발견! 길이: {len(json_text)}")
+                    print(f"📄 추출된 JSON 미리보기: {json_text[:200]}...")
+                    
+                    try:
+                        recommendations = json.loads(json_text)
+                        print(f"✅ JSON 파싱 성공! {len(recommendations)}개 종목 발견")
+                        
+                        # 추천 종목 출력
+                        print("\n📊 AI 추천 투자 종목:")
+                        print("-" * 40)
+                        for j, stock in enumerate(recommendations, 1):
+                            print(f"{j}. {stock.get('ticker', 'N/A')} ({stock.get('name', 'N/A')})")
+                            print(f"   현재가: ${stock.get('current_price', 'N/A')}")
+                            print(f"   AI 점수: {stock.get('score', 'N/A')}/100")
+                            print(f"   RSI: {stock.get('rsi', 'N/A')}")
+                            print()
+                        
+                        found_json = True
+                        break
+                        
+                    except json.JSONDecodeError as je:
+                        print(f"❌ JSON 파싱 실패 (패턴 {i+1}): {str(je)}")
+                        continue
+                else:
+                    print(f"❌ 패턴 {i+1} 매치 실패")
+            
+            if not found_json:
+                logger.warning("모든 JSON 패턴 시도 실패")
+                print("⚠️ 모든 JSON 패턴 시도 실패")
+                print(f"📄 전체 결과 내용:\n{result_text}")
                 return
                 
         except Exception as parse_error:
@@ -103,6 +146,16 @@ def analyze_all_recommendations():
             
             log_analysis_complete(logger, ticker, "개별종목분석", True)
             
+            # CrewOutput 객체인 경우 텍스트 추출
+            if hasattr(result, 'raw'):
+                analysis_text = result.raw
+            elif hasattr(result, 'result'):
+                analysis_text = str(result.result)
+            elif hasattr(result, 'output'):
+                analysis_text = str(result.output)
+            else:
+                analysis_text = str(result)
+            
             # 분석 결과 저장
             analysis_results.append({
                 'ticker': ticker,
@@ -110,7 +163,7 @@ def analyze_all_recommendations():
                 'recommendation_score': stock.get('score', 'N/A'),
                 'current_price': stock.get('current_price', 'N/A'),
                 'rsi': stock.get('rsi', 'N/A'),
-                'analysis_result': result,
+                'analysis_result': analysis_text,
                 'analysis_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             })
             
