@@ -9,7 +9,23 @@ def markdown_to_html(text: str) -> str:
     if not text:
         return ""
     
-    # HTML 이스케이프 처리
+    # 먼저 코드 블록 제거 (```로 둘러싸인 부분)
+    code_blocks = []
+    code_pattern = r'```[^`]*?```'
+    
+    def preserve_code_block(match):
+        code_blocks.append(match.group(0))
+        return f"__CODE_BLOCK_{len(code_blocks)-1}__"
+    
+    text = re.sub(code_pattern, preserve_code_block, text, flags=re.DOTALL)
+    
+    # AI 에이전트 디버그 텍스트 제거 (Thought:, Action: 등)
+    text = re.sub(r'^Thought:.*?(?=\n[A-Z]|\n\n|\Z)', '', text, flags=re.MULTILINE | re.DOTALL)
+    text = re.sub(r'^Action:.*?(?=\n[A-Z]|\n\n|\Z)', '', text, flags=re.MULTILINE | re.DOTALL)
+    text = re.sub(r'^Observation:.*?(?=\n[A-Z]|\n\n|\Z)', '', text, flags=re.MULTILINE | re.DOTALL)
+    text = re.sub(r'^Final Answer:.*?(?=\n[A-Z]|\n\n|\Z)', '', text, flags=re.MULTILINE | re.DOTALL)
+    
+    # HTML 이스케이프 처리 (코드 블록은 제외됨)
     text = text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     
     # 제목 변환 (# ## ### 등)
@@ -56,6 +72,11 @@ def markdown_to_html(text: str) -> str:
     
     # 숫자가 포함된 메트릭을 하이라이트
     result = re.sub(r'(\d+/100|\d+\.\d+%|\$\d+\.\d+)', r'<span class="metric-highlight">\1</span>', result)
+    
+    # 코드 블록 복원 (제거했던 것들을 다시 삽입하되, HTML 이스케이프는 하지 않음)
+    for i, code_block in enumerate(code_blocks):
+        placeholder = f"__CODE_BLOCK_{i}__"
+        result = result.replace(placeholder, "")  # 코드 블록은 완전히 제거
     
     return result
 
