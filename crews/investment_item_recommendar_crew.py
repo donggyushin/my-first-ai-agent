@@ -6,16 +6,39 @@ import yfinance as yf
 import requests
 import json
 from typing import List
+from datetime import datetime
 
 class InvestmentItemRecommendarCrew:
     """투자 종목 추천을 위한 크루 - 인기 종목 검색 및 기술적 분석 기반 추천"""
 
     def __init__(self):
-        # GPT-4o 모델 설정
+        # 현재 날짜 정보
+        self.current_date = datetime.now()
+        self.current_year = self.current_date.year
+        self.current_month = self.current_date.strftime("%B")  # "September"
+        self.current_date_str = self.current_date.strftime("%Y년 %m월")  # "2025년 09월"
+        
+        # 시스템 프롬프트에 현재 날짜 정보 포함
+        system_message = f"""You are an AI assistant with access to current market data. 
+        Current date and time information:
+        - Today's date: {self.current_date.strftime('%Y-%m-%d')}
+        - Current year: {self.current_year}
+        - Current month: {self.current_month}
+        - Current time: {self.current_date.strftime('%H:%M:%S UTC')}
+        
+        When performing web searches or looking up information, always use the current date ({self.current_year} {self.current_month}) 
+        and avoid using outdated information from previous years like 2023 or 2024.
+        Search queries should reflect the current timeframe: "{self.current_year} {self.current_month} [your search terms]"
+        """
+        
+        # GPT-4o 모델 설정 (시스템 메시지 포함)
         self.llm = ChatOpenAI(
             model="gpt-4o",
             temperature=0.1,
-            openai_api_key=os.getenv("OPENAI_API_KEY")
+            openai_api_key=os.getenv("OPENAI_API_KEY"),
+            model_kwargs={
+                "system": system_message
+            }
         )
 
         # 웹 검색 도구
@@ -185,11 +208,15 @@ class InvestmentItemRecommendarCrew:
             goal='현재 시장에서 인기 있는 미국 주식 종목 20개 이상을 수집하고 기본 정보를 제공합니다',
             verbose=True,
             memory=True,
-            backstory="""당신은 미국 주식 시장 전문 리서처로서 실시간으로 인기 종목들을 추적합니다.
-            S&P 500, NASDAQ의 주요 종목들과 최근 트렌드를 파악하여 
+            backstory=f"""당신은 미국 주식 시장 전문 리서처로서 {self.current_date_str} 현재 실시간으로 인기 종목들을 추적합니다.
+            S&P 500, NASDAQ의 주요 종목들과 {self.current_year}년 최신 트렌드를 파악하여 
             투자자들에게 관심받고 있는 종목들을 선별하는 전문가입니다.
             특히 거래량, 시가총액, 최근 성과 등을 종합적으로 고려하여
-            투자 가치가 있는 종목들을 식별합니다.""",
+            투자 가치가 있는 종목들을 식별합니다.
+            
+            현재 날짜: {self.current_year}년 {self.current_month}
+            웹 검색 시에는 반드시 {self.current_year}년 {self.current_month} 기준의 최신 정보를 찾아야 합니다.
+            오래된 날짜(2023년, 2024년 등)의 정보는 사용하지 마세요.""",
             tools=[self.search_tool],
             llm=self.llm,
         )
@@ -221,7 +248,9 @@ class InvestmentItemRecommendarCrew:
         popular_stocks_data = self.get_popular_stocks()
         
         return Task(
-            description=f"""다음은 현재 시장에서 인기 있는 미국 주식 종목들입니다:
+            description=f"""현재 날짜: {self.current_year}년 {self.current_month} {self.current_date.day}일
+
+            다음은 현재 시장에서 인기 있는 미국 주식 종목들입니다:
 
             {popular_stocks_data}
 
@@ -229,11 +258,14 @@ class InvestmentItemRecommendarCrew:
 
             수행할 작업:
             1. 제공된 종목 리스트를 검토하고 검증
-            2. 필요시 웹 검색을 통해 추가 정보나 최신 동향 확인
+            2. 필요시 웹 검색을 통해 {self.current_year}년 {self.current_month} 최신 정보나 동향 확인
             3. 다양한 섹터에서 균형있게 선별된 것인지 확인
-            4. JSON 형식으로 최종 결과 정리
+            4. JSON 형식으로 최신 결과 정리
 
-            주의사항:
+            중요한 지침:
+            - 현재는 {self.current_year}년 {self.current_month}입니다
+            - 웹 검색 시 "{self.current_year} {self.current_month} popular US stocks" 형태로 검색하세요
+            - 2023년, 2024년 등 오래된 정보는 사용하지 마세요
             - 실제로 거래되고 있는 종목들만 포함
             - 최소 20개 이상의 종목 확보
             - 정확한 JSON 형식으로 출력""",
