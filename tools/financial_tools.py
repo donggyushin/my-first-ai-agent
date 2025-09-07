@@ -98,16 +98,35 @@ class RealTimeFinancialHealthTool(BaseTool):
             stock = yf.Ticker(ticker)
             info = stock.info
             
-            # Get financial ratios from Yahoo Finance
-            debt_to_equity = info.get("debtToEquity", 0) / 100 if info.get("debtToEquity") else None
-            current_ratio = info.get("currentRatio", None)
-            roe = info.get("returnOnEquity", 0) * 100 if info.get("returnOnEquity") else None
-            profit_margin = info.get("profitMargins", 0) * 100 if info.get("profitMargins") else None
+            # Get financial ratios from Yahoo Finance (handle None values safely)
+            debt_to_equity = info.get("debtToEquity")
+            if debt_to_equity is not None:
+                debt_to_equity = debt_to_equity / 100
             
-            # Additional metrics
-            quick_ratio = info.get("quickRatio", None)
-            gross_margins = info.get("grossMargins", 0) * 100 if info.get("grossMargins") else None
-            operating_margins = info.get("operatingMargins", 0) * 100 if info.get("operatingMargins") else None
+            current_ratio = info.get("currentRatio")
+            
+            roe = info.get("returnOnEquity")
+            if roe is not None:
+                roe = roe * 100
+                
+            profit_margin = info.get("profitMargins")
+            if profit_margin is not None:
+                profit_margin = profit_margin * 100
+            
+            # Additional metrics (handle None values safely)
+            quick_ratio = info.get("quickRatio")
+            
+            gross_margins = info.get("grossMargins")
+            if gross_margins is not None:
+                gross_margins = gross_margins * 100
+                
+            operating_margins = info.get("operatingMargins") 
+            if operating_margins is not None:
+                operating_margins = operating_margins * 100
+                
+            # Check if this is an ETF or special security type
+            quote_type = info.get("quoteType", "")
+            company_name = info.get("longName", ticker)
             
             score = 0
             max_score = 100
@@ -206,7 +225,29 @@ class RealTimeFinancialHealthTool(BaseTool):
                 overall = "주의 - 상당한 재무 리스크"
                 risk_level = "높음"
             
-            company_name = info.get("longName", ticker)
+            # Special handling for ETFs and other securities
+            if quote_type in ["ETF", "MUTUALFUND"]:
+                result = f"""
+실시간 재무 건전성 분석: {company_name} ({ticker})
+==============================================
+⚠️  {quote_type} 분석 제한사항:
+• 이 종목은 {quote_type}으로 개별 기업의 재무건전성 분석이 제한적입니다.
+• ETF/펀드는 구성종목들의 포트폴리오이므로 전통적인 재무비율 분석이 적용되지 않습니다.
+• 대신 운용보수, 자산규모, 추적오차 등을 고려하여 분석해야 합니다.
+
+📊 사용 가능한 데이터:
+• 당좌비율: {quick_ratio if quick_ratio else 'N/A'}
+• 매출총이익률: {f"{gross_margins:.2f}%" if gross_margins else 'N/A'}
+• 영업이익률: {f"{operating_margins:.2f}%" if operating_margins else 'N/A'}
+
+💡 {quote_type} 투자 고려사항:
+• 운용비용 및 추적오차 확인 필요
+• 기초자산의 펀더멘털 분석 필요
+• 유동성 및 거래량 확인 필요
+
+※ 데이터 출처: Yahoo Finance (실시간)
+"""
+                return result
             
             result = f"""
 실시간 재무 건전성 분석: {company_name} ({ticker})
@@ -219,8 +260,8 @@ class RealTimeFinancialHealthTool(BaseTool):
 
 💡 추가 재무 지표:
 • 당좌비율: {quick_ratio if quick_ratio else 'N/A'}
-• 매출총이익률: {gross_margins:.2f}% if gross_margins else 'N/A'
-• 영업이익률: {operating_margins:.2f}% if operating_margins else 'N/A'
+• 매출총이익률: {f"{gross_margins:.2f}%" if gross_margins else 'N/A'}
+• 영업이익률: {f"{operating_margins:.2f}%" if operating_margins else 'N/A'}
 
 🎯 투자 가이드라인:
 • 85-100점: 보수적 투자자에게 적합 (저위험)
