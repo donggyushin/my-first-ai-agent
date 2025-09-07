@@ -1,0 +1,12 @@
+research_task:
+  description: >
+    Research the latest stock market news and developments related to: {topic}
+    Focus on finding recent market movements, earnings reports, analyst ratings,
+    company announcements, and any significant events that could impact stock prices.
+    Include both positive and negative developments. Current year is 2025.
+  expected_output: >
+    A comprehensive list of 10 bullet points covering the most relevant and recent
+    stock market information about {topic}, including price movements, financial news,
+    analyst opinions, and market trends that investors should be aware of.
+  agent: researcher
+  output_file: output/report.md
