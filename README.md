@@ -1,35 +1,65 @@
-# my-first-ai-agent
+# 📈 AI 주식 분석 에이전트 시스템
 
-## AI Agent란?
+CrewAI 프레임워크를 사용한 다중 에이전트 주식 분석 및 포트폴리오 관리 시스템입니다.
 
-AI Agent는 사용자의 지시를 받아 자율적으로 작업을 수행할 수 있는 인공지능 시스템입니다. 단순히 질문에 답하는 챗봇과 달리, AI Agent는 다음과 같은 특징을 가집니다:
+## 🤖 AI Agent란?
+
+AI Agent(AI 에이전트)는 특정 목표를 달성하기 위해 자율적으로 행동하고, 환경을 인식하며, 도구를 사용할 수 있는 AI 시스템입니다. 
 
 ### 주요 특징
+- **자율성**: 인간의 개입 없이 독립적으로 작업 수행
+- **반응성**: 환경 변화에 실시간으로 대응
+- **능동성**: 목표 달성을 위해 주도적으로 행동
+- **사회성**: 다른 에이전트와 협력하여 복잡한 작업 해결
 
-1. **자율성 (Autonomy)**: 주어진 목표를 달성하기 위해 스스로 판단하고 행동합니다.
-2. **반응성 (Reactivity)**: 환경의 변화를 감지하고 적절히 대응합니다.
-3. **사회성 (Social Ability)**: 다른 Agent나 사용자와 소통하고 협력할 수 있습니다.
-4. **능동성 (Proactivity)**: 목표 지향적으로 행동하며, 필요에 따라 먼저 행동을 취합니다.
+이 프로젝트에서는 주식 분석, 투자 조언, 번역, 리포트 작성 등의 전문적인 역할을 수행하는 여러 AI 에이전트들이 협력합니다.
 
-### 작동 원리
+## 🎯 시스템 개요
 
-AI Agent는 일반적으로 다음과 같은 순서로 작동합니다:
+### 주식 분석 크루 (Stock Crew)
+1. **Research Specialist** - 최신 시장 뉴스 및 정보 수집
+2. **Investment Analyst** - 투자 분석 및 구체적인 매매 타이밍 제시
+3. **Translator** - 영문 분석 보고서의 전문적인 한글 번역
+4. **Report Writer** - 고급 투자자를 위한 한글 요약 보고서 작성
 
-1. **인식 (Perception)**: 환경으로부터 정보를 수집
-2. **추론 (Reasoning)**: 수집된 정보를 바탕으로 상황을 분석
-3. **계획 (Planning)**: 목표 달성을 위한 행동 계획 수립
-4. **실행 (Action)**: 계획에 따라 실제 행동 수행
-5. **학습 (Learning)**: 결과를 평가하고 향후 성능 개선
+### 포트폴리오 관리 크루 (Portfolio Crew)
+1. **Portfolio Analyzer** - 고객의 현재 포지션 분석
+2. **Risk Manager** - 리스크 평가 및 위험 관리 전략 수립
+3. **Portfolio Advisor** - 개인화된 한글 투자 조언 제공
 
-### 활용 분야
+## 🚀 프로젝트 실행
 
-- **고객 서비스**: 24/7 고객 지원 및 문의 처리
-- **업무 자동화**: 반복적인 업무 처리 및 워크플로우 관리
-- **개인 비서**: 일정 관리, 정보 검색, 작업 도움
-- **게임**: NPC 행동 제어 및 게임 환경 관리
-- **IoT**: 스마트 홈 기기 제어 및 관리
+### 환경 설정
+1. 환경변수 파일(.env) 설정:
+```bash
+OPENAI_API_KEY="your_openai_api_key"
+SERPER_API_KEY="your_serper_api_key"
+```
 
-## UV 프로젝트 매니저
+2. 의존성 설치 및 실행:
+```bash
+# UV를 사용한 의존성 설치
+uv sync
+
+# 프로그램 실행
+uv run python main.py
+```
+
+### 사용 방법
+1. **1단계**: 분석할 주식 티커 또는 회사명 입력
+2. **2단계**: AI 에이전트들이 순차적으로 분석 수행
+   - 뉴스 리서치 → 투자 분석 → 한글 번역 → 요약 보고서
+3. **3단계**: 개인 포트폴리오 조언 옵션 선택
+   - 보유 평균 단가 입력 시 개인화된 매매 조언 제공
+
+### 생성되는 보고서
+- `research_report.md` - 최신 뉴스 및 시장 동향
+- `investment_analysis.md` - 영문 상세 투자 분석
+- `investment_analysis_kr.md` - 한글 투자 분석
+- `compacted_investment_analysis_kr.md` - 한글 요약 보고서
+- `portfolio_recommendation_kr.md` - 개인화된 포트폴리오 조언 (선택적)
+
+## 🛠 UV 프로젝트 매니저
 
 이 프로젝트는 **UV**를 패키지 매니저로 사용합니다. UV는 Python을 위한 빠르고 현대적인 패키지 관리 및 프로젝트 관리 도구입니다.
 
@@ -44,15 +74,6 @@ UV는 Rust로 작성된 Python 패키지 매니저로, 기존의 pip, virtualenv
 
 ### UV 사용법
 
-#### 프로젝트 초기화
-```bash
-# 새 프로젝트 생성
-uv init my-project
-
-# 기존 프로젝트에서 초기화
-uv init
-```
-
 #### 패키지 관리
 ```bash
 # 패키지 설치
@@ -60,9 +81,6 @@ uv add requests
 
 # 개발 의존성 설치
 uv add --dev pytest
-
-# 패키지 제거
-uv remove requests
 
 # 모든 의존성 설치
 uv sync
@@ -73,21 +91,28 @@ uv sync
 # 가상환경에서 스크립트 실행
 uv run python main.py
 
-# 가상환경에서 명령 실행
-uv run pytest
-
 # 쉘 활성화
 uv shell
 ```
 
-#### 기타 유용한 명령
-```bash
-# 의존성 트리 확인
-uv tree
+## 📁 프로젝트 구조
 
-# 프로젝트 정보 확인
-uv show
-
-# 캐시 정리
-uv cache clean
 ```
+my-first-ai-agent/
+├── crews/
+│   ├── stock_crew.py      # 주식 분석 멀티 에이전트
+│   └── portfolio_crew.py  # 포트폴리오 관리 멀티 에이전트
+├── tools/
+│   └── financial_tools.py # 실시간 금융 데이터 도구
+├── output/                # 생성된 분석 보고서들
+├── main.py               # 메인 실행 파일
+└── .env                  # 환경변수 설정
+```
+
+## 🔧 기술 스택
+
+- **CrewAI**: 멀티 에이전트 오케스트레이션 프레임워크
+- **OpenAI GPT-5-mini**: 고성능 언어 모델
+- **yfinance**: 실시간 금융 데이터 API
+- **SerperDev**: 웹 검색 및 뉴스 수집 도구
+- **UV**: Python 패키지 및 프로젝트 관리
