@@ -124,6 +124,8 @@ logs/
 .DS_Store
 .vscode/
 .idea/
+reports/
+*.html
 
 # API Keys and secrets
 .env.local
