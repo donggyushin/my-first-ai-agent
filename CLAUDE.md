@@ -12,6 +12,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Testing Commands
 - `uv run python -c "import crews.investment_advisor_crew; print('✅ Import successful')"` - Test basic imports
 - `uv run python -c "from crews.investment_item_recommendar_crew import InvestmentItemRecommendarCrew; crew = InvestmentItemRecommendarCrew(); print('✅ Crew created')"` - Test crew instantiation
+- `uv run python -c "from utils.logger import setup_logger; logger = setup_logger(); print('✅ Logger test successful')"` - Test logging system
+- `uv run python -c "from config.constants import MESSAGE_TEMPLATES; print('✅ Config loaded:', len(MESSAGE_TEMPLATES), 'templates')"` - Test configuration system
 
 ## Architecture Overview
 
@@ -40,6 +42,12 @@ A sequential 3-agent system for detailed single-stock analysis:
 - **financial_tools.py**: Real-time valuation (PER, PBR, PSR) and financial health scoring
 - **advanced_stock_analysis.py**: Technical indicators, comprehensive scoring system (0-100 points)
 - **news_sentiment_tool.py**: News sentiment analysis with keyword-based scoring
+- **firecrawl_tool.py**: Web scraping tool for news and financial content
+
+### System Infrastructure (`utils/`, `config/`)
+- **utils/logger.py**: Comprehensive logging system with daily log files and structured error tracking
+- **config/constants.py**: Centralized configuration management for weights, thresholds, and templates
+- Automated log rotation and error tracking for production monitoring
 
 ### Data Sources
 - **yfinance**: Primary source for real-time stock data, financial ratios, price history
@@ -85,14 +93,68 @@ The project uses UV for Python package management with Python 3.13.2+. Key depen
 ### Technical Analysis Scoring (0-100):
 Combines multiple technical indicators with specific point allocations and thresholds for objective stock evaluation.
 
-## Error Handling Strategy
+## Error Handling & Monitoring Strategy
 
-The system includes comprehensive error handling:
-- API failures gracefully degrade (e.g., if recommendation system fails, individual analysis still works)
-- Invalid tickers are caught and reported with helpful messages
-- ETF/mutual fund limitations are explicitly handled and explained to users
-- Missing financial data is handled gracefully with "N/A" indicators
+The system includes comprehensive error handling and monitoring:
+- **Graceful Degradation**: API failures are handled gracefully (e.g., if recommendation system fails, individual analysis continues)
+- **Input Validation**: Invalid tickers are caught with helpful error messages and suggestions
+- **Security**: API keys are validated at startup; sensitive information is protected via environment variables
+- **Logging & Monitoring**: All operations are logged to `logs/` directory with detailed error tracking and stack traces
+- **ETF/Fund Handling**: ETF/mutual fund limitations are explicitly handled with user-friendly explanations
+- **Data Resilience**: Missing financial data is handled gracefully with "N/A" indicators and alternative data sources
+- **Memory Management**: Automatic cleanup of large data objects to prevent memory leaks during batch processing
 
 ## Korean Language Interface
 
 The system uses Korean for user interface and reports while maintaining English variable names and technical terms in code. Reports include both Korean explanations and English technical indicators for clarity.
+
+## Project Structure
+
+```
+my-first-ai-agent/
+├── main.py                     # Main entry point with improved error handling
+├── .env                        # Environment variables (API keys)
+├── pyproject.toml             # UV package management
+├── CLAUDE.md                  # This file
+├── README.md                  # Project documentation
+├── .gitignore                 # Git ignore patterns
+├── crews/                     # CrewAI agent definitions
+│   ├── __init__.py
+│   ├── investment_advisor_crew.py      # 3-agent analysis crew
+│   └── investment_item_recommendar_crew.py  # 2-agent recommendation crew
+├── tools/                     # Analysis tools and data sources
+│   ├── __init__.py
+│   ├── advanced_stock_analysis.py     # Technical analysis engine
+│   ├── financial_tools.py            # Valuation and health metrics
+│   ├── news_sentiment_tool.py        # News sentiment analysis
+│   └── firecrawl_tool.py            # Web scraping utilities
+├── utils/                     # System utilities (NEW)
+│   ├── __init__.py
+│   └── logger.py                     # Comprehensive logging system
+├── config/                    # Configuration management (NEW)
+│   ├── __init__.py
+│   └── constants.py                  # Centralized constants and settings
+└── logs/                      # Generated log files (AUTO-CREATED)
+    └── investment_advisor_YYYYMMDD.log
+```
+
+## Recent Improvements (2025-09-07)
+
+### 🔧 System Enhancements
+1. **Logging System**: Added comprehensive logging with daily rotation and error tracking
+2. **Configuration Management**: Centralized constants and settings in `config/` module
+3. **Memory Optimization**: Improved memory management for batch stock processing
+4. **Security**: Enhanced API key protection and input validation
+5. **Error Handling**: Robust error handling with user-friendly messages and detailed logging
+
+### 🧪 Testing Infrastructure
+- Complete test coverage for all modules and integrations
+- Automated validation of imports, configurations, and core functionalities
+- End-to-end system testing with real data sources
+- Performance and memory usage validation
+
+### 📊 Production Readiness
+- Structured logging for monitoring and debugging
+- Graceful error handling and recovery mechanisms
+- Resource cleanup and memory management
+- Security best practices implementation
