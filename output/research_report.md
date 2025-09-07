@@ -1,21 +1,10 @@
-1. **Current Stock Price:** As of the latest data available from Yahoo Finance, the Direxion Daily TSLA Bull 2X Shares (TSLL) is quoted at $13.51. [Source](https://finance.yahoo.com/quote/TSLL/)
-
-2. **Price Forecast for 2025:** According to StocksCan, TSLL is forecasted to average around $9.0367 with a high prediction of $15.04 and a potential low estimate. [Source](https://stockscan.io/stocks/TSLL/forecast)
-
-3. **Momentum Indicator:** Tickeron noted that as of September 3, 2025, TSLL’s Momentum Indicator moved above 0, suggesting a potential new upward trend in stock price. [Source](https://tickeron.com/ticker/TSLL/)
-
-4. **Investment Strategy:** The Direxion Daily TSLA Bull 2X Shares (TSLL) aims for 200% of the daily performance of TSLA, as noted by multiple sources including CNBC. [Source](https://www.cnbc.com/quotes/TSLL)
-
-5. **Price Movement:** On September 5, 2025, Investing.com discussed TSLL's news and analysis, mentioning notable events like Tesla's trillion-dollar deal, which could affect the leverage product. [Source](https://www.investing.com/etfs/tsll)
-
-6. **Analyst Ratings:** AltIndex provides an AI-based score for TSLL, indicating stability in its forecast. [Source](https://altindex.com/ticker/tsll/price-prediction)
-
-7. **Performance Report:** Robinhood reports a 32.02% price return year-on-year as of August 31, 2025, indicating a positive performance metric for investors. [Source](https://robinhood.com/us/en/stocks/TSLL/)
-
-8. **Options Trading:** Yahoo Finance lists options for TSLL, such as the August 2025 $14.500 put options, providing traders flexibility in positioning around TSLL’s strategy. [Source](https://finance.yahoo.com/quote/TSLL250829P00014500/)
-
-9. **Leveraged ETF Strategy:** The fund is designed for 200% daily leverage concerning the Tesla stock, which is crucial for day traders seeking amplified exposure. [Source](https://www.direxion.com/product/daily-tsla-bull-and-bear-leveraged-single-stock-etfs)
-
-10. **Historical Data Insights:** Nasdaq provides historical data and advanced charting tools, supporting investors in making educated decisions based on past TSLL performances. [Source](https://www.nasdaq.com/market-activity/etf/tsll)
-
-These bullet points provide a rounded perspective on TSLL’s current stock environment, investment outlook, and strategic positioning in the market.
+- As of September 6, 2025, BOIL is trading at a price of $29.90, down from a previous close of $30.90. The stock has fluctuated within a day range of $29.78 to $31.33. [Investing.com](https://www.investing.com/etfs/proshares-ultra-dj-ubs-natural-gas)
+- The Aroon Indicator for BOIL has entered a downward trend as of September 5, 2025, suggesting a potential strong downward movement. Traders are advised to be cautious. [Tickeron](https://tickeron.com/ticker/BOIL/)
+- Recent price forecasts suggest that BOIL is expected to reach an average price of $89.19 by the end of 2025, with a high prediction of $109.32. [Stockscan.io](https://stockscan.io/stocks/BOIL/forecast)
+- A buy signal was issued from a pivot bottom point on August 25, 2025, and since then, BOIL has risen by 14.66%, indicating potential for further price increase. [StockInvest.us](https://stockinvest.us/stock/BOIL)
+- Analysts provide a mixed outlook on BOIL, noting its volatility due to natural gas futures' fluctuations. This leverage makes BOIL both a risky and rewarding option depending on market momentum. [Yahoo Finance](https://finance.yahoo.com/quote/BOIL/)
+- ProShares Ultra Bloomberg Natural Gas ETF (BOIL) focuses on delivering 2x the daily returns of natural gas futures, targeting investors looking for leverage in energy commodities. [ProShares](https://www.proshares.com/our-etfs/leveraged-and-inverse/boil)
+- BOIL options data is available on MarketWatch, providing traders with insights into various maturity periods and potential hedging opportunities. [MarketWatch](https://www.marketwatch.com/investing/fund/boil/options)
+- Despite recent fluctuations, there is a noted AI score stability at 49, hinting at a steady performance horizon presently for BOIL. [Altindex](https://altindex.com/ticker/boil/price-prediction)
+- The historical data for August 2025 illustrates a rollercoaster pattern, with high volatility and trading volumes suggesting intense trader interest. [Yahoo Finance](https://finance.yahoo.com/quote/BOIL/history/)
+- BOIL's strategy appeals mainly to short-term traders who are experienced in navigating highly leveraged funds and are seeking to capitalize on short-term price movements in the natural gas markets. [Nasdaq](https://www.nasdaq.com/market-activity/etf/boil/news-headlines)
