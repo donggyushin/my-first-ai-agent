@@ -9,4 +9,22 @@ research_task:
     stock market information about {topic}, including price movements, financial news,
     analyst opinions, and market trends that investors should be aware of.
   agent: researcher
-  output_file: output/report.md
+  output_file: output/research_report.md
+
+analysis_task:
+  description: >
+    Based on the research report about {topic}, provide a comprehensive investment analysis.
+    Analyze the fundamental and technical aspects, evaluate the current valuation,
+    assess risk factors, and provide a clear investment recommendation (BUY/HOLD/SELL)
+    with specific reasons and price targets if applicable. Consider both short-term and
+    long-term investment perspectives.
+  expected_output: >
+    A detailed investment analysis report including:
+    - Executive Summary with clear BUY/HOLD/SELL recommendation
+    - Fundamental Analysis (strengths, weaknesses, financial health)
+    - Risk Assessment (potential risks and mitigation strategies)
+    - Price Target and Timeline
+    - Investment Rationale with specific reasoning
+    Format as a professional investment recommendation report.
+  agent: investment_analyst
+  output_file: output/investment_analysis.md

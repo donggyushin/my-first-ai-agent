@@ -23,15 +23,28 @@ class LatestStcokCrew():
             tools=[SerperDevTool()]
         )
 
+    @agent
+    def investment_analyst(self) -> Agent:
+        return Agent(
+            config=self.agents_config['investment_analyst'], # type: ignore[index]
+            verbose=True,
+        )
+
     @task
     def research_task(self) -> Task:
         return Task(
             config=self.tasks_config['research_task'], # type: ignore[index]
         )
 
+    @task
+    def analysis_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['analysis_task'], # type: ignore[index]
+        )
+
     @crew
     def crew(self) -> Crew:
-        """Creatxes the LatestAiDevelopment crew"""
+        """Creates the LatestStcokCrew crew"""
         return Crew(
             agents=self.agents, # Automatically created by the @agent decorator
             tasks=self.tasks, # Automatically created by the @task decorator
@@ -41,15 +54,15 @@ class LatestStcokCrew():
 
 if __name__ == "__main__":
     crew = LatestStcokCrew()
-    
+
     # 유저로부터 주식 티커 또는 회사명 입력받기
     topic = input("연구하고 싶은 주식 티커나 회사명을 입력하세요: ")
-    
+
     print(f"\n'{topic}'에 대한 주식 연구를 시작합니다...\n")
-    
+
     # 입력받은 주제로 연구 실행
     result = crew.crew().kickoff(inputs={"topic": topic})
-    
+
     print("\n" + "="*50)
     print("연구 결과:")
     print("="*50)
