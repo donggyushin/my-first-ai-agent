@@ -24,21 +24,8 @@ class InvestmentItemRecommendarCrew:
     def get_popular_stocks(self) -> str:
         """현재 인기 있는 미국 주식 종목들을 가져오는 도구"""
         try:
-            # S&P 500 상위 종목들과 최근 인기 종목들 수집
-            popular_tickers = [
-                # Tech giants
-                'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'META', 'NVDA',
-                # Financial
-                'JPM', 'BAC', 'WFC', 'GS', 'MS',
-                # Healthcare
-                'JNJ', 'PFE', 'UNH', 'ABBV', 'MRK',
-                # Consumer
-                'KO', 'PEP', 'WMT', 'HD', 'DIS',
-                # Energy
-                'XOM', 'CVX', 'COP',
-                # Other popular
-                'V', 'MA', 'NFLX', 'AMD', 'INTC'
-            ]
+            from config.constants import POPULAR_TICKERS
+            popular_tickers = POPULAR_TICKERS
             
             # yfinance를 사용해서 실시간 데이터 확인 및 필터링
             valid_stocks = []
@@ -54,8 +41,11 @@ class InvestmentItemRecommendarCrew:
                             'volume': info.get('regularMarketVolume', 0),
                             'marketCap': info.get('marketCap', 0)
                         })
-                except:
+                except Exception:
                     continue
+                    
+                if len(valid_stocks) >= 25:
+                    break
                     
             return json.dumps(valid_stocks[:25], indent=2)  # 25개 반환
             
@@ -71,13 +61,17 @@ class InvestmentItemRecommendarCrew:
             for stock in stocks:
                 ticker = stock['ticker']
                 try:
-                    # yfinance로 상세 데이터 가져오기
+                    # yfinance로 상세 데이터 가져오기 (메모리 효율적으로)
                     yf_stock = yf.Ticker(ticker)
                     hist = yf_stock.history(period="3mo")  # 3개월 데이터
-                    info = yf_stock.info
                     
                     if len(hist) < 20:  # 충분한 데이터가 없으면 스킵
                         continue
+                    
+                    # 필요한 정보만 선택적으로 가져오기 (메모리 최적화)
+                    info = yf_stock.info
+                    required_keys = ['longName', 'regularMarketPrice']
+                    filtered_info = {k: info.get(k) for k in required_keys if k in info}
                     
                     # 기술적 지표 계산
                     current_price = hist['Close'].iloc[-1]
@@ -157,7 +151,10 @@ class InvestmentItemRecommendarCrew:
                         'momentum_20d': round(price_change_20d, 1)
                     })
                     
-                except Exception as e:
+                    # 메모리 정리
+                    del hist, yf_stock, info
+                    
+                except Exception:
                     continue
             
             # 점수 순으로 정렬하여 상위 5개 선택

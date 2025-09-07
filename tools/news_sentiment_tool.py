@@ -16,9 +16,9 @@ class NewsSentimentTool(BaseTool):
 
     def _run(self, ticker: str) -> str:
         try:
-            # NewsAPI를 사용한 뉴스 검색
-            # 실제 구현에서는 환경변수에서 API 키를 가져와야 합니다
-            api_key = "bb8e4fcfd4bc4ea4a1ba2b1b105a592f"  # 실제로는 환경변수에서 가져와야 함
+            import os
+            # NewsAPI를 사용한 뉴스 검색 (현재는 yfinance 사용)
+            # api_key = os.getenv("NEWS_API_KEY")  # 환경변수에서 안전하게 가져오기
 
             # 지난 7일간의 뉴스 검색
             from_date = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
