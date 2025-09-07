@@ -55,19 +55,21 @@ translation_task:
 final_report_task:
   description: >
     Based on the detailed Korean investment analysis report about {topic}, create a 
-    concise executive summary report for busy clients. Extract and condense the most 
+    concise executive summary report for busy Korean clients. Extract and condense the most 
     critical information including investment recommendation, key price targets, 
-    major risks, and actionable insights. Focus on what clients need to know to 
-    make immediate investment decisions.
+    major risks, and actionable insights. Focus on what Korean clients need to know to 
+    make immediate investment decisions. Write the entire report in Korean language.
   expected_output: >
-    A compact executive investment summary report (2-3 pages maximum) including:
-    - 투자 추천 요약 (BUY/HOLD/SELL with confidence level)
-    - 핵심 가격 정보 (현재가, 매수 구간, 목표가, 손절가)
-    - 주요 투자 근거 (3-5개 핵심 포인트)
-    - 주요 위험 요소 (3개 주요 리스크)
-    - 투자 시나리오 (베스트/베이스/워스트 케이스)
-    - 포트폴리오 비중 제안
-    - 시간대별 액션 플랜 (단기/장기)
+    A compact executive investment summary report in Korean (maximum 2-3 pages) including:
+    - Investment recommendation summary (BUY/HOLD/SELL with confidence level)
+    - Key price information (current price, buy zones, target price, stop-loss)
+    - Major investment rationale (3-5 key points)
+    - Major risk factors (3 key risks)
+    - Investment scenarios (optimistic/base/pessimistic cases)
+    - Portfolio allocation suggestions
+    - Time-based action plan (short-term/long-term)
     Format as a professional, client-ready executive summary with clear action items.
+    The entire report must be written in Korean language with professional Korean 
+    financial terminology and cultural context appropriate for Korean investors.
   agent: report_writer
   output_file: output/compacted_investment_analysis_kr.md
