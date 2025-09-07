@@ -2,16 +2,26 @@ import dotenv
 
 dotenv.load_dotenv()
 
-from crewai import Crew, Agent, Task
-from crewai.project import CrewBase, agent
+from crewai import Crew
+from crewai.project import CrewBase, agent, task
 
 @CrewBase
 class TranslatorCrew:
+    agents_config = 'config/agents.yaml'
+    tasks_config = 'config/tasks.yaml'
 
     @agent
     def translator_agent(self):
-        return Agent(
-            role="Human-like English to Korean Translator",
-            goal="Provide natural, contextually appropriate Korean translations that capture both the literal meaning and cultural nuances of English text",
-            backstory="You are an experienced translator with deep understanding of both English and Korean cultures. You have spent years bridging communication gaps between English and Korean speakers, specializing in making translations feel natural and human-like rather than robotic. You understand cultural context, idioms, and the subtle differences in formality levels in Korean language."
+        return self.agents_config['translator_agent']
+
+    @task
+    def translate_task(self):
+        return self.tasks_config['translate_task']
+
+    def crew(self) -> Crew:
+        return Crew(
+            agents=self.agents,
+            tasks=self.tasks,
+            process_mode='sequential',
+            verbose=True
         )
