@@ -28,3 +28,21 @@ analysis_task:
     Format as a professional investment recommendation report.
   agent: investment_analyst
   output_file: output/investment_analysis.md
+
+translation_task:
+  description: >
+    Translate the investment analysis report about {topic} from English to Korean.
+    Maintain all financial terminology accuracy, preserve the analytical structure,
+    and ensure the Korean version is natural and professional for Korean investors.
+    Keep all numerical data, percentages, and recommendations exactly as in the original.
+    Use appropriate Korean financial terminology and maintain the professional tone
+    throughout the document.
+  expected_output: >
+    A complete Korean translation of the investment analysis report including:
+    - All sections translated with accurate financial terminology
+    - Preserved numerical data and recommendations
+    - Natural Korean language flow suitable for professional investors
+    - Maintained document structure and formatting
+    - Professional tone appropriate for Korean financial markets
+  agent: translator
+  output_file: output/investment_analysis_kr.md

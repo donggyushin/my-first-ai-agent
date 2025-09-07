@@ -32,6 +32,13 @@ class LatestStcokCrew():
             tools=[calculate_valuation_metrics, calculate_financial_health_score]
         )
 
+    @agent
+    def translator(self) -> Agent:
+        return Agent(
+            config=self.agents_config['translator'], # type: ignore[index]
+            verbose=True,
+        )
+
     @task
     def research_task(self) -> Task:
         return Task(
@@ -42,6 +49,12 @@ class LatestStcokCrew():
     def analysis_task(self) -> Task:
         return Task(
             config=self.tasks_config['analysis_task'], # type: ignore[index]
+        )
+
+    @task
+    def translation_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['translation_task'], # type: ignore[index]
         )
 
     @crew
