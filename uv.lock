@@ -1819,6 +1819,7 @@ dependencies = [
     { name = "crewai" },
     { name = "crewai-tools" },
     { name = "dotenv" },
+    { name = "numpy" },
     { name = "openai" },
     { name = "yfinance" },
 ]
@@ -1833,6 +1834,7 @@ requires-dist = [
     { name = "crewai", specifier = ">=0.177.0" },
     { name = "crewai-tools", specifier = ">=0.69.0" },
     { name = "dotenv", specifier = ">=0.9.9" },
+    { name = "numpy", specifier = ">=2.3.2" },
     { name = "openai", specifier = ">=1.106.1" },
     { name = "yfinance", specifier = ">=0.2.65" },
 ]
