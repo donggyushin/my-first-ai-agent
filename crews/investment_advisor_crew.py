@@ -1,9 +1,9 @@
 from crewai import Agent, Task, Crew, Process
-from crewai_tools import SerperDevTool
 from langchain_openai import ChatOpenAI
 from tools.news_sentiment_tool import analyze_news_sentiment
 from tools.advanced_stock_analysis import get_advanced_stock_analysis
 from tools.financial_tools import get_real_time_valuation, get_real_time_financial_health
+from tools.firecrawl_tool import firecrawl_search_tool
 import os
 
 class InvestmentAdvisorCrew:
@@ -18,7 +18,7 @@ class InvestmentAdvisorCrew:
         )
 
         # 웹 검색 도구
-        self.search_tool = SerperDevTool()
+        self.search_tool = firecrawl_search_tool
 
     def news_analyst(self) -> Agent:
         return Agent(

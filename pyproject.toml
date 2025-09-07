@@ -13,6 +13,7 @@ dependencies = [
     "yfinance>=0.2.65",
     "pandas>=2.2.0",
     "requests>=2.31.0",
+    "firecrawl-py>=0.0.20",
 ]
 
 [dependency-groups]

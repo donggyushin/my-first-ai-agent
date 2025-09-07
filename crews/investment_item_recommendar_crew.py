@@ -1,6 +1,6 @@
 from crewai import Agent, Task, Crew, Process
-from crewai_tools import SerperDevTool
 from langchain_openai import ChatOpenAI
+from tools.firecrawl_tool import firecrawl_search_tool
 import os
 import yfinance as yf
 import requests
@@ -19,7 +19,7 @@ class InvestmentItemRecommendarCrew:
         )
 
         # 웹 검색 도구
-        self.search_tool = SerperDevTool()
+        self.search_tool = firecrawl_search_tool
 
     def get_popular_stocks(self) -> str:
         """현재 인기 있는 미국 주식 종목들을 가져오는 도구"""
