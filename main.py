@@ -6,45 +6,93 @@ from crewai import Crew, Agent, Task
 from crewai.project import CrewBase, agent, task
 
 @CrewBase
-class TranslatorCrew:
+class NewsCrew:
 
     @agent
-    def translator_agent(self):
+    def searcher(self):
         return Agent(
-            role="Human-like English to Korean Translator",
-            goal="Provide natural, contextually appropriate Korean translations that capture both the literal meaning and cultural nuances of English text",
-            backstory="You are an experienced translator with deep understanding of both English and Korean cultures. You have spent years bridging communication gaps between English and Korean speakers, specializing in making translations feel natural and human-like rather than robotic. You understand cultural context, idioms, and the subtle differences in formality levels in Korean language.",
+            role="News Search Specialist",
+            goal="Find and gather relevant news articles on specified topics from reliable sources",
+            backstory="You are an experienced news researcher with expertise in finding credible and up-to-date information from various news sources. You know how to identify reliable sources and filter out noise to find the most relevant news articles.",
+            verbose=True
+        )
+
+    @agent
+    def summarizer(self):
+        return Agent(
+            role="News Summarization Expert",
+            goal="Create concise, informative summaries of news articles while preserving key information and context",
+            backstory="You are a skilled journalist and editor with years of experience in distilling complex news stories into clear, digestible summaries. You understand how to identify the most important points and present them in a structured, easy-to-understand format.",
+            verbose=True
+        )
+
+    @agent
+    def curator(self):
+        return Agent(
+            role="News Content Curator",
+            goal="Select and organize the most relevant and important news articles for the target audience",
+            backstory="You are a seasoned news curator with excellent judgment in determining newsworthiness and audience relevance. You understand how to prioritize stories, eliminate redundancy, and create well-structured news collections that provide maximum value to readers.",
+            verbose=True
+        )
+
+    @agent
+    def translator(self):
+        return Agent(
+            role="English to Korean News Translator",
+            goal="Provide accurate and natural Korean translations of English news content while maintaining journalistic tone and cultural context",
+            backstory="You are a professional translator specializing in news and media content with expertise in both English and Korean languages. You understand the nuances of journalistic writing in both languages and can adapt content to Korean cultural context while preserving the original meaning and tone.",
             verbose=True
         )
 
     @task
-    def translate_task(self):
+    def search_news_task(self):
         return Task(
-            description="Translate the following English text to Korean with natural, human-like expressions that consider cultural context and appropriate formality levels: {text}",
-            expected_output="A natural Korean translation that accurately conveys the meaning, tone, and cultural nuances of the original English text.",
-            agent=self.translator_agent()
+            description="Search for recent news articles about the topic: {topic}. Find at least 5 relevant articles from credible sources.",
+            expected_output="A list of news articles with titles, sources, URLs, and brief descriptions.",
+            agent=self.searcher()
+        )
+
+    @task
+    def summarize_news_task(self):
+        return Task(
+            description="Create concise summaries of the found news articles. Each summary should be 2-3 sentences capturing the key points.",
+            expected_output="Summarized versions of each news article with key information preserved.",
+            agent=self.summarizer()
+        )
+
+    @task
+    def curate_news_task(self):
+        return Task(
+            description="Select the top 3 most important and relevant articles from the summarized news. Rank them by importance and relevance.",
+            expected_output="A curated list of the top 3 news articles with explanations for why they were selected.",
+            agent=self.curator()
+        )
+
+    @task
+    def translate_news_task(self):
+        return Task(
+            description="Translate the curated English news articles to Korean while maintaining journalistic tone and accuracy.",
+            expected_output="Korean translations of the curated news articles that are natural and culturally appropriate.",
+            agent=self.translator()
         )
 
     def crew(self) -> Crew:
         return Crew(
-            agents=[self.translator_agent()],
-            tasks=[self.translate_task()],
+            agents=[self.searcher(), self.summarizer(), self.curator(), self.translator()],
+            tasks=[self.search_news_task(), self.summarize_news_task(), self.curate_news_task(), self.translate_news_task()],
             process_mode='sequential',
             verbose=True
         )
 
 
 if __name__ == "__main__":
-    # 사용 예시
-    translator_crew = TranslatorCrew()
-
-    # 번역할 영어 텍스트 (더 어렵고 긴 내용)
-    english_text = """
-    The rapid advancement of artificial intelligence has fundamentally transformed the landscape of modern technology, creating unprecedented opportunities while simultaneously raising profound ethical questions about the future of human-machine interaction. As machine learning algorithms become increasingly sophisticated, they demonstrate remarkable capabilities in pattern recognition, natural language processing, and decision-making processes that were once considered exclusively within the domain of human cognition. However, this technological revolution also presents significant challenges regarding privacy, employment displacement, and the potential for algorithmic bias that could perpetuate existing societal inequalities. Consequently, it has become imperative for policymakers, technologists, and society at large to engage in thoughtful discourse about establishing comprehensive frameworks that can harness the transformative potential of AI while mitigating its associated risks and ensuring equitable access to its benefits across diverse communities.
-    """
-
+    news_crew = NewsCrew()
+    
+    # 뉴스 주제
+    topic = "artificial intelligence latest developments"
+    
     # crew 실행
-    result = translator_crew.crew().kickoff(inputs={"text": english_text})
-
-    print("번역 결과:")
+    result = news_crew.crew().kickoff(inputs={"topic": topic})
+    
+    print("뉴스 처리 결과:")
     print(result)
