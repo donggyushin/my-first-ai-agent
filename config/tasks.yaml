@@ -13,19 +13,24 @@ research_task:
 
 analysis_task:
   description: >
-    Based on the research report about {topic}, provide a comprehensive investment analysis.
-    Analyze the fundamental and technical aspects, evaluate the current valuation,
-    assess risk factors, and provide a clear investment recommendation (BUY/HOLD/SELL)
-    with specific reasons and price targets if applicable. Consider both short-term and
-    long-term investment perspectives.
+    Based on the research report about {topic}, provide a comprehensive investment analysis
+    with specific price targets. Analyze fundamental and technical aspects, evaluate current
+    valuation, assess risk factors, and provide clear BUY/HOLD/SELL recommendation with
+    precise entry points, profit-taking levels, and stop-loss prices. Include both
+    short-term trading and long-term investment perspectives with specific price ranges.
   expected_output: >
-    A detailed investment analysis report including:
+    A detailed investment analysis report with specific price targets including:
     - Executive Summary with clear BUY/HOLD/SELL recommendation
+    - Current Price Analysis and Fair Value Estimation
+    - BUY ZONES: Specific price ranges for optimal entry points
+    - SELL ZONES: Target prices for profit-taking (25%, 50%, 100% gains)
+    - STOP-LOSS: Risk management price levels
     - Fundamental Analysis (strengths, weaknesses, financial health)
-    - Risk Assessment (potential risks and mitigation strategies)
-    - Price Target and Timeline
-    - Investment Rationale with specific reasoning
-    Format as a professional investment recommendation report.
+    - Technical Analysis (support/resistance levels, trend analysis)
+    - Risk Assessment with quantified risk/reward ratios
+    - Timeline: Short-term (3-6 months) and Long-term (1-2 years) price targets
+    - Investment Strategy: Position sizing and portfolio allocation suggestions
+    Format as a professional investment recommendation report with actionable price levels.
   agent: investment_analyst
   output_file: output/investment_analysis.md
 
