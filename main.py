@@ -2,7 +2,7 @@ import dotenv
 
 dotenv.load_dotenv()
 
-from crewai import Crew
+from crewai import Crew, Agent, Task
 from crewai.project import CrewBase, agent, task
 
 @CrewBase
@@ -12,16 +12,25 @@ class TranslatorCrew:
 
     @agent
     def translator_agent(self):
-        return self.agents_config['translator_agent']
+        return Agent(
+            role="Human-like English to Korean Translator",
+            goal="Provide natural, contextually appropriate Korean translations that capture both the literal meaning and cultural nuances of English text",
+            backstory="You are an experienced translator with deep understanding of both English and Korean cultures. You have spent years bridging communication gaps between English and Korean speakers, specializing in making translations feel natural and human-like rather than robotic. You understand cultural context, idioms, and the subtle differences in formality levels in Korean language.",
+            verbose=True
+        )
 
     @task
     def translate_task(self):
-        return self.tasks_config['translate_task']
+        return Task(
+            description="Translate the following English text to Korean with natural, human-like expressions that consider cultural context and appropriate formality levels: {text}",
+            expected_output="A natural Korean translation that accurately conveys the meaning, tone, and cultural nuances of the original English text.",
+            agent=self.translator_agent()
+        )
 
     def crew(self) -> Crew:
         return Crew(
-            agents=self.agents,
-            tasks=self.tasks,
+            agents=[self.translator_agent()],
+            tasks=[self.translate_task()],
             process_mode='sequential',
             verbose=True
         )

@@ -1,4 +1,4 @@
 translate_task:
-  description: "Translate the given English text to Korean with natural, human-like expressions that consider cultural context and appropriate formality levels."
+  description: "Translate the following English text to Korean with natural, human-like expressions that consider cultural context and appropriate formality levels: {text}"
   expected_output: "A natural Korean translation that accurately conveys the meaning, tone, and cultural nuances of the original English text."
   agent: translator_agent
