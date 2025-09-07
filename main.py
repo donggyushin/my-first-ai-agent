@@ -38,3 +38,12 @@ class LatestStcokCrew():
             process=Process.sequential,
             verbose=True,
         )
+
+if __name__ == "__main__":
+    crew = LatestStcokCrew()
+
+    # BOIL 주식에 대한 연구 실행
+    result = crew.crew().kickoff(inputs={"topic": "BOIL"})
+
+    print("연구 결과:")
+    print(result)
