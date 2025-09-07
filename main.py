@@ -3,12 +3,9 @@ import dotenv
 dotenv.load_dotenv()
 
 from crewai import Crew, Agent, Task
-from crewai.project import CrewBase, agent, task
 
-@CrewBase
 class NewsCrew:
-
-    @agent
+    
     def searcher(self):
         return Agent(
             role="News Search Specialist",
@@ -17,7 +14,6 @@ class NewsCrew:
             verbose=True
         )
 
-    @agent
     def summarizer(self):
         return Agent(
             role="News Summarization Expert",
@@ -26,7 +22,6 @@ class NewsCrew:
             verbose=True
         )
 
-    @agent
     def curator(self):
         return Agent(
             role="News Content Curator",
@@ -35,7 +30,6 @@ class NewsCrew:
             verbose=True
         )
 
-    @agent
     def translator(self):
         return Agent(
             role="English to Korean News Translator",
@@ -44,7 +38,6 @@ class NewsCrew:
             verbose=True
         )
 
-    @task
     def search_news_task(self):
         return Task(
             description="Search for recent news articles about the topic: {topic}. Find at least 5 relevant articles from credible sources.",
@@ -52,7 +45,6 @@ class NewsCrew:
             agent=self.searcher()
         )
 
-    @task
     def summarize_news_task(self):
         return Task(
             description="Create concise summaries of the found news articles. Each summary should be 2-3 sentences capturing the key points.",
@@ -60,7 +52,6 @@ class NewsCrew:
             agent=self.summarizer()
         )
 
-    @task
     def curate_news_task(self):
         return Task(
             description="Select the top 3 most important and relevant articles from the summarized news. Rank them by importance and relevance.",
@@ -68,7 +59,6 @@ class NewsCrew:
             agent=self.curator()
         )
 
-    @task
     def translate_news_task(self):
         return Task(
             description="Translate the curated English news articles to Korean while maintaining journalistic tone and accuracy.",
@@ -87,12 +77,12 @@ class NewsCrew:
 
 if __name__ == "__main__":
     news_crew = NewsCrew()
-    
+
     # 뉴스 주제
     topic = "artificial intelligence latest developments"
-    
+
     # crew 실행
     result = news_crew.crew().kickoff(inputs={"topic": topic})
-    
+
     print("뉴스 처리 결과:")
     print(result)
