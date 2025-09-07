@@ -9,6 +9,7 @@ dependencies = [
     "crewai-tools>=0.69.0",
     "dotenv>=0.9.9",
     "openai>=1.106.1",
+    "yfinance>=0.2.65",
 ]
 
 [dependency-groups]

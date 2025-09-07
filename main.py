@@ -8,7 +8,7 @@ from crewai import Agent, Crew, Process, Task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 
 from crewai_tools import SerperDevTool
-from tools.financial_tools import calculate_valuation_metrics, calculate_financial_health_score
+from tools.financial_tools import get_real_time_valuation, get_real_time_financial_health
 
 @CrewBase
 class LatestStcokCrew():
@@ -29,7 +29,7 @@ class LatestStcokCrew():
         return Agent(
             config=self.agents_config['investment_analyst'], # type: ignore[index]
             verbose=True,
-            tools=[calculate_valuation_metrics, calculate_financial_health_score]
+            tools=[get_real_time_valuation, get_real_time_financial_health]
         )
 
     @agent
