@@ -2,6 +2,7 @@ from crewai.tools import BaseTool
 from typing import Type
 from pydantic import BaseModel, Field
 import yfinance as yf
+import datetime
 
 class StockTickerInput(BaseModel):
     """Input schema for stock analysis tools."""
@@ -17,9 +18,12 @@ class RealTimeValuationTool(BaseTool):
             stock = yf.Ticker(ticker)
             info = stock.info
             
-            # Current stock data
-            current_price = info.get("currentPrice", info.get("regularMarketPrice", "N/A"))
+            # Current stock data - 우선순위: regularMarketPrice > currentPrice
+            current_price = info.get("regularMarketPrice") or info.get("currentPrice") or "N/A"
             market_cap = info.get("marketCap", "N/A")
+            
+            # 현재 날짜 가져오기
+            today = datetime.date.today().strftime("%Y-%m-%d")
             
             # Valuation metrics from Yahoo Finance
             pe_ratio = info.get("trailingPE", "N/A")
@@ -64,7 +68,7 @@ class RealTimeValuationTool(BaseTool):
 =================================================
 📊 기본 정보:
 • 업종: {sector} - {industry}
-• 현재가: ${current_price}
+• 현재가: ${current_price} ({today} 기준)
 • 시가총액: {format_number(market_cap)}
 • 연간 매출: {format_number(revenue)}
 
