@@ -39,6 +39,13 @@ class LatestStcokCrew():
             verbose=True,
         )
 
+    @agent
+    def report_writer(self) -> Agent:
+        return Agent(
+            config=self.agents_config['report_writer'], # type: ignore[index]
+            verbose=True,
+        )
+
     @task
     def research_task(self) -> Task:
         return Task(
@@ -55,6 +62,12 @@ class LatestStcokCrew():
     def translation_task(self) -> Task:
         return Task(
             config=self.tasks_config['translation_task'], # type: ignore[index]
+        )
+
+    @task
+    def final_report_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['final_report_task'], # type: ignore[index]
         )
 
     @crew
