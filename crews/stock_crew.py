@@ -17,7 +17,8 @@ class LatestStockCrew():
             goal="Find and gather the most relevant and timely stock market news, company earnings reports, market analysis, and financial developments from credible financial sources. Always prioritize information from the current date and the most recent trading days.",
             backstory="You are an experienced financial journalist and market researcher with deep expertise in stock markets, financial analysis, and investment news. You have years of experience tracking market trends, company performance, and economic indicators. You know how to identify reliable financial news sources and filter out market noise to find the most impactful news that could affect stock prices and investment decisions. You always focus on the most current information available and understand that market conditions change rapidly, so you prioritize today's date and recent developments over older news.",
             verbose=True,
-            tools=[SerperDevTool()]
+            tools=[SerperDevTool()],
+            llm="openai/gpt-5-mini"
         )
 
     @agent
@@ -27,7 +28,8 @@ class LatestStockCrew():
             goal="Analyze research reports and provide actionable investment recommendations with specific buy and sell price targets. Determine optimal entry points (buy zones), profit-taking levels (sell zones), and stop-loss levels based on fundamental analysis, technical indicators, risk assessment, and current market conditions.",
             backstory="You are a seasoned investment analyst with over 15 years of experience in equity research and portfolio management. You have worked at top-tier investment firms and have a proven track record of making profitable investment recommendations with precise price targets. You excel at analyzing company fundamentals, market trends, valuation metrics, and risk factors to provide clear, actionable investment advice with specific entry and exit strategies. You always provide concrete price ranges for buying opportunities, profit-taking levels, and risk management stop-losses. You are known for your conservative approach and always highlight both opportunities and risks with quantified price levels.",
             verbose=True,
-            tools=[get_real_time_valuation, get_real_time_financial_health]
+            tools=[get_real_time_valuation, get_real_time_financial_health],
+            llm="openai/gpt-5-mini"
         )
 
     @agent

@@ -22,13 +22,14 @@ class PortfolioCrew():
                 FileReadTool(file_path="output/investment_analysis.md"),
                 FileReadTool(file_path="output/investment_analysis_kr.md"),
                 FileReadTool(file_path="output/compacted_investment_analysis_kr.md")
-            ]
+            ],
+            llm="openai/gpt-5-mini"
         )
 
     @agent
     def risk_manager(self) -> Agent:
         return Agent(
-            role="Risk Management Specialist", 
+            role="Risk Management Specialist",
             goal="Assess portfolio risk and provide risk-adjusted recommendations based on client's current position and market analysis",
             backstory="You are a quantitative risk management expert with deep experience in portfolio risk assessment. You specialize in evaluating position risk, calculating risk-reward ratios, and providing recommendations that balance potential returns with downside protection. You always consider position sizing, diversification, and risk management principles.",
             verbose=True,
@@ -37,7 +38,8 @@ class PortfolioCrew():
                 FileReadTool(file_path="output/investment_analysis.md"),
                 FileReadTool(file_path="output/investment_analysis_kr.md"),
                 FileReadTool(file_path="output/compacted_investment_analysis_kr.md")
-            ]
+            ],
+            llm="openai/gpt-5-mini"
         )
 
     @agent
@@ -50,7 +52,8 @@ class PortfolioCrew():
             tools=[
                 FileReadTool(file_path="output/investment_analysis_kr.md"),
                 FileReadTool(file_path="output/compacted_investment_analysis_kr.md")
-            ]
+            ],
+            llm="openai/gpt-5-mini"
         )
 
     @task
