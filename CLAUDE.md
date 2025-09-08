@@ -5,7 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ### Development Commands
-- `uv run python main.py` - Run the main investment advisory system
+- `uv run python main.py` - Run the main investment advisory system (auto-analyzes top 5 recommended stocks)
+- `uv run python report_single_ticker.py` - Interactive single ticker analysis with user input
 - `uv run python test_recommendation_only.py` - Test only the recommendation system (faster testing)
 - `uv run python test_report.py` - Test HTML report generation functionality
 - `uv sync` - Install/update dependencies using UV package manager 
@@ -20,7 +21,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-This is a multi-agent AI investment advisory system built with CrewAI, GPT-4o, and real-time financial data APIs. The system provides two main workflows:
+This is a multi-agent AI investment advisory system built with CrewAI, GPT-4o, and real-time financial data APIs. The system provides three main execution modes:
 
 ### 1. Investment Item Recommender Crew (`crews/investment_item_recommendar_crew.py`)
 A sequential 2-agent system that:
@@ -39,6 +40,14 @@ A sequential 3-agent system for detailed single-stock analysis:
 3. Runs the Individual Stock Analysis crew for the chosen ticker
 4. Outputs comprehensive investment report with specific recommendations
 5. **NEW**: Optional HTML report generation for better visualization and sharing
+
+### 3. Interactive Single Ticker Analysis (`report_single_ticker.py`)
+A user-interactive mode for analyzing specific stocks:
+- **User Input**: Interactive ticker input with validation
+- **Real-time Analysis**: On-demand analysis of user-specified stocks
+- **Continuous Operation**: Loop-based interface for multiple analyses
+- **Exit Options**: 'q' or 'quit' commands to terminate
+- **HTML Reports**: Automatic report generation for each analysis
 
 ### Alternative Execution Modes
 - **`test_recommendation_only.py`**: Quick testing of recommendation system only
@@ -122,7 +131,8 @@ The system uses Korean for user interface and reports while maintaining English 
 
 ```
 my-first-ai-agent/
-├── main.py                     # Main entry point with improved error handling
+├── main.py                     # Main entry point - auto-analyzes top 5 recommended stocks
+├── report_single_ticker.py     # Interactive single ticker analysis with user input
 ├── main_old.py                 # Previous version for reference
 ├── test_recommendation_only.py # Quick recommendation system testing
 ├── test_report.py             # HTML report generation testing
